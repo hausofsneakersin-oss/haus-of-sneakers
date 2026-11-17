@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HAUS OF SNEAKER — Premium Sneaker Boutique</title>
+  <meta name="description" content="HAUS OF SNEAKER — India's premier independent streetwear sneaker boutique. Unisex collection, shipping PAN India, verified authentic pairs with return & replacement guarantee." />
+  
+  <link rel="icon" type="image/jpeg" href="assets/haus-og-preview.jpg" />
+
+  <!-- Open Graph & WhatsApp Sharing Meta Tags (Full Large Card Format) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="HAUS OF SNEAKER" />
+  <meta property="og:url" content="https://sneakers-website-demo-1.vercel.app/" />
+  <meta property="og:title" content="HAUS OF SNEAKER — Unisex Footwear | Pan India Shipping" />
+  <meta property="og:description" content="Exclusive luxury streetwear & cult sneaker silhouettes. Easy return & replacement policy. Order directly on WhatsApp: +91 8547023694." />
+  <meta property="og:image" content="https://sneakers-website-demo-1.vercel.app/assets/share_card.jpg" />
+  <meta property="og:image:secure_url" content="https://sneakers-website-demo-1.vercel.app/assets/share_card.jpg" />
+  <meta property="og:image:type" content="image/jpeg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="HAUS OF SNEAKER" />
+  <link rel="image_src" href="https://sneakers-website-demo-1.vercel.app/assets/share_card.jpg" />
+
+  <!-- Twitter Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://sneakers-website-demo-1.vercel.app/" />
+  <meta name="twitter:title" content="HAUS OF SNEAKER — Unisex Footwear | Pan India Shipping" />
+  <meta name="twitter:description" content="Exclusive luxury streetwear & cult sneaker silhouettes. Easy return & replacement policy. Order directly on WhatsApp: +91 8547023694." />
+  <meta name="twitter:image" content="https://sneakers-website-demo-1.vercel.app/assets/share_card.jpg" />
+
+  <!-- Tailwind CSS (Local Offline Support with CDN Fallback) -->
+  <script src="js/tailwind.js"></script>
+  <script>
+    if (typeof tailwind === 'undefined') {
+      const cdnScript = document.createElement('script');
+      cdnScript.src = 'https://cdn.tailwindcss.com';
+      document.head.appendChild(cdnScript);
+    }
+  </script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Oswald', 'Bebas Neue', 'sans-serif'],
+            condensed: ['Oswald', 'sans-serif'],
+            mono: ['Space Grotesk', 'monospace'],
+            sans: ['Inter', 'sans-serif']
+          },
+          colors: {
+            karb: {
+              main: '#000000',
+              sec: '#080808',
+              card: '#000000',
+              border: 'rgba(255, 255, 255, 0.12)'
+            },
+            core: {
+              blue: '#ffffff',
+              hover: '#e5e5e5',
+              deep: '#000000',
+              light: '#111111',
+              ice: '#080808',
+              border: 'rgba(255, 255, 255, 0.12)'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css?v=1794910245-16" />
+</head>
+<body class="bg-black text-white selection:bg-white selection:text-black">
+
+  <!-- SITE HEADER / NAVBAR -->
+  <header class="site-header bg-black text-white border-b border-white/10 sticky top-0 z-50">
+    <div class="w-full px-5 lg:px-12 h-16 sm:h-20 flex items-center justify-between">
+      
+      <!-- LEFT: HAUS OF SNEAKER BRAND LOGO -->
+      <div class="flex items-center">
+        <a href="#hero-banner-section" class="flex items-center group py-2" title="HAUS OF SNEAKER" style="text-decoration:none;">
+          <span style="font-family:'Oswald',sans-serif;font-style:italic;font-weight:800;font-size:clamp(17px,2.2vw,24px);letter-spacing:-0.01em;line-height:1;white-space:nowrap;display:flex;align-items:baseline;gap:0.25em;">
+            <span style="color:#F2F2F2;">HAUS OF</span>
+            <span style="color:transparent;-webkit-text-stroke:1.4px #F2F2F2;">SNEAKERS</span>
+          </span>
+        </a>
+      </div>
+
+      <!-- CENTER: DESKTOP 4 NAVIGATION LINKS -->
+      <nav class="hidden lg:flex items-center gap-6 xl:gap-8 text-xs xl:text-sm font-condensed tracking-widest uppercase font-bold text-[#EDEDED]" id="desktop-main-nav">
+        <a href="#hero-banner-section" class="nav-link relative py-2 hover:text-white transition-colors duration-200">
+          <span>HOME</span>
+          <span class="nav-indicator absolute bottom-0 left-0 w-0 h-[2px] bg-white transition-all duration-300"></span>
+        </a>
+        <a href="#ua-quality-section" class="nav-link relative py-2 hover:text-white transition-colors duration-200">
+          <span>SNEAKERS</span>
+          <span class="nav-indicator absolute bottom-0 left-0 w-0 h-[2px] bg-white transition-all duration-300"></span>
+        </a>
+        <a href="#clogs-section" class="nav-link relative py-2 hover:text-white transition-colors duration-200">
+          <span>CLOGS</span>
+          <span class="nav-indicator absolute bottom-0 left-0 w-0 h-[2px] bg-white transition-all duration-300"></span>
+        </a>
+        <a href="#slides-section" class="nav-link relative py-2 hover:text-white transition-colors duration-200">
+          <span>FLIP FLOPS & SLIDES</span>
+          <span class="nav-indicator absolute bottom-0 left-0 w-0 h-[2px] bg-white transition-all duration-300"></span>
+        </a>
+        <a href="#site-footer" class="nav-link relative py-2 hover:text-white transition-colors duration-200">
+          <span>CONTACT</span>
+          <span class="nav-indicator absolute bottom-0 left-0 w-0 h-[2px] bg-white transition-all duration-300"></span>
+        </a>
+        <a href="#faq-section" class="nav-link relative py-2 hover:text-white transition-colors duration-200">
+          <span>TRACK ORDER</span>
+          <span class="nav-indicator absolute bottom-0 left-0 w-0 h-[2px] bg-white transition-all duration-300"></span>
+        </a>
+      </nav>
+
+      <!-- RIGHT: ACTIONS & MOBILE HAMBURGER -->
+      <div class="flex items-center gap-2 sm:gap-4 text-white">
+        <!-- Search Icon -->
+        <button onclick="openSearchDrawer()" class="p-2 text-[#EDEDED] hover:text-white transition-colors" title="Search footwear" aria-label="Search">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+        </button>
+
+        <!-- Cart Bag -->
+        <button onclick="openCartDrawer()" class="p-2 text-[#EDEDED] hover:text-white relative transition-colors flex items-center" title="Shopping Bag" aria-label="Shopping Bag">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+          <span class="cart-count-badge font-condensed font-bold text-[10px] sm:text-xs ml-1">0</span>
+        </button>
+
+        <!-- Clean Mobile Hamburger Icon (On the Right) -->
+        <button id="mobile-menu-btn" class="lg:hidden p-2 text-white hover:text-neutral-300 focus:outline-none transition-colors" aria-label="Toggle navigation menu" title="Menu">
+          <svg id="hamburger-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+          <svg id="close-menu-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Mobile Nav Slide Panel -->
+    <div id="mobile-nav-panel" class="hidden lg:hidden border-t border-white/10 bg-black/95 backdrop-blur-md px-6 py-6 space-y-2 font-condensed font-bold text-lg uppercase tracking-widest text-[#EDEDED]">
+      <a href="#hero-banner-section" onclick="closeMobileNav()" class="mobile-nav-item flex items-center justify-between py-3 border-b border-white/10 hover:text-white transition-colors">
+        <span>HOME</span>
+        <svg class="w-4 h-4 text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </a>
+      <a href="#ua-quality-section" onclick="closeMobileNav()" class="mobile-nav-item flex items-center justify-between py-3 border-b border-white/10 hover:text-white transition-colors">
+        <span>SNEAKERS</span>
+        <svg class="w-4 h-4 text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </a>
+      <a href="#clogs-section" onclick="closeMobileNav()" class="mobile-nav-item flex items-center justify-between py-3 border-b border-white/10 hover:text-white transition-colors">
+        <span>CLOGS</span>
+        <svg class="w-4 h-4 text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </a>
+      <a href="#slides-section" onclick="closeMobileNav()" class="mobile-nav-item flex items-center justify-between py-3 border-b border-white/10 hover:text-white transition-colors">
+        <span>FLIP FLOPS & SLIDES</span>
+        <svg class="w-4 h-4 text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </a>
+      <a href="#site-footer" onclick="closeMobileNav()" class="mobile-nav-item flex items-center justify-between py-3 border-b border-white/10 hover:text-white transition-colors">
+        <span>CONTACT</span>
+        <svg class="w-4 h-4 text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </a>
+      <a href="#faq-section" onclick="closeMobileNav()" class="mobile-nav-item flex items-center justify-between py-3 hover:text-white transition-colors">
+        <span>TRACK ORDER</span>
+        <svg class="w-4 h-4 text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </header>
+
+  <!-- HERO EDITORIAL BANNER (WITH SMOOTH CROSSFADE SLIDER) -->
+  <section id="hero-banner-section" class="relative w-full bg-black overflow-hidden border-b border-white/10" style="height:70vh;">
+    <!-- Slide 1: Jump Model -->
+    <div id="hero-slide-1" class="hero-bg-slide absolute inset-0 w-full h-full opacity-100 transition-opacity duration-1000 ease-in-out z-[1]">
+      <img 
+        src="assets/hero/core-hero-new.jpg?v=20261116-09" 
+        alt="HAUS OF SNEAKER Campaign - Jump" 
+        class="w-full h-full object-cover select-none block"
+        style="object-position: center 30%;"
+        loading="eager"
+      />
+    </div>
+
+    <!-- Slide 2: Streetwear Editorial Lounge (User 2nd Image) -->
+    <div id="hero-slide-2" class="hero-bg-slide absolute inset-0 w-full h-full opacity-0 transition-opacity duration-1000 ease-in-out z-[1]">
+      <img 
+        src="assets/hero/core-hero-slide-2.jpg?v=20261116-09" 
+        alt="HAUS OF SNEAKER Campaign - Editorial" 
+        class="w-full h-full object-cover select-none block"
+        style="object-position: center center;"
+        loading="lazy"
+      />
+    </div>
+
+    <!-- Vignette / Contrast gradient -->
+    <div class="absolute inset-0 z-[2] bg-gradient-to-t from-black/85 via-transparent to-black/25 pointer-events-none"></div>
+
+    <!-- Tagline on bottom-left -->
+    <div class="absolute bottom-6 left-6 sm:bottom-10 sm:left-12 z-[3] pointer-events-none max-w-xl">
+      <span id="hero-tagline-sub" class="text-[10px] sm:text-xs font-condensed tracking-widest text-neutral-400 block mb-1 uppercase font-bold transition-all duration-700">
+        HAUS OF SNEAKER • 2026
+      </span>
+      <h1 id="hero-tagline-main" class="font-condensed text-2xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white uppercase leading-none drop-shadow-md transition-all duration-700">
+        ARCHITECTURAL COMMUTE.
+      </h1>
+    </div>
+
+    <!-- Minimal Slide Indicators (Dots) -->
+    <div class="absolute bottom-6 right-6 sm:bottom-10 sm:right-12 z-[3] flex items-center gap-2">
+      <button onclick="setHeroSlide(0)" id="hero-dot-0" class="w-8 h-1 bg-white transition-all duration-300" title="Slide 1"></button>
+      <button onclick="setHeroSlide(1)" id="hero-dot-1" class="w-4 h-1 bg-white/30 hover:bg-white/60 transition-all duration-300" title="Slide 2"></button>
+    </div>
+
+    <!-- Responsive Height Styles -->
+    <style>
+      #hero-banner-section { height: 60vh; }
+      @media (min-width: 640px) { #hero-banner-section { height: 80vh; } }
+      @media (min-width: 1024px) { #hero-banner-section { height: 92vh; } }
+    </style>
+  </section>
+
+  <!-- INTERACTIVE FILTER TABS & SEARCH / SORT CONTROLS -->
+  <section id="gender-filter-section" class="pt-8 pb-4 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-black text-white">
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/10 pb-4">
+      
+      <!-- Gender Filter Buttons (Square, border-white/20, condensed uppercase) -->
+      <div class="flex items-center gap-2 overflow-x-auto pb-2 md:pb-0 no-scrollbar">
+        <button class="gender-tab filter-tab-active px-4 py-2 border border-white text-xs font-condensed font-bold uppercase tracking-widest bg-white text-black transition-all" data-gender="all">
+          All Silhouettes
+        </button>
+        <button class="gender-tab px-4 py-2 border border-white/20 text-xs font-condensed font-bold uppercase tracking-widest text-neutral-300 hover:border-white hover:text-white transition-all" data-gender="men">
+          Men's Footwear
+        </button>
+        <button class="gender-tab px-4 py-2 border border-white/20 text-xs font-condensed font-bold uppercase tracking-widest text-neutral-300 hover:border-white hover:text-white transition-all" data-gender="women">
+          Women's Footwear
+        </button>
+        <button class="gender-tab px-4 py-2 border border-white/20 text-xs font-condensed font-bold uppercase tracking-widest text-neutral-300 hover:border-white hover:text-white transition-all" data-gender="unisex">
+          Unisex Series
+        </button>
+        <button class="gender-tab px-4 py-2 border border-white/20 text-xs font-condensed font-bold uppercase tracking-widest text-neutral-300 hover:border-white hover:text-white transition-all" data-gender="clogs">
+          Clogs
+        </button>
+        <button class="gender-tab px-4 py-2 border border-white/20 text-xs font-condensed font-bold uppercase tracking-widest text-neutral-300 hover:border-white hover:text-white transition-all" data-gender="slides">
+          Flip Flops & Slides
+        </button>
+      </div>
+
+      <!-- Sort Controls & Sizing Guide Shortcut -->
+      <div class="flex items-center gap-4 text-xs font-condensed tracking-wider">
+        <button onclick="openSizeGuide()" class="text-white hover:text-neutral-400 flex items-center gap-1.5 underline underline-offset-4 font-bold uppercase">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6h18M3 12h18M3 18h18"></path></svg>
+          Sizing Chart
+        </button>
+
+        <div class="flex items-center gap-2">
+          <span class="text-neutral-400 font-bold uppercase">Sort:</span>
+          <select id="sort-select" class="bg-black border border-white/20 text-white rounded-none py-1 px-3 text-xs font-condensed font-bold uppercase cursor-pointer focus:outline-none">
+            <option value="featured">Featured First</option>
+            <option value="price-low">Price: Low to High</option>
+            <option value="price-high">Price: High to Low</option>
+            <option value="rating">Top Rated (5.0★)</option>
+          </select>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+      <!-- SECTION: SHOP BY CATEGORY (Compact & Responsive per User Request) -->
+  <section id="shop-by-category-section" class="py-10 sm:py-14 bg-black text-white border-t border-b border-white/10">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="mb-6 text-center">
+        <span class="text-xs font-condensed tracking-widest font-bold uppercase text-neutral-400 block mb-1">✦ CURATED EDITORIALS</span>
+        <h2 class="font-condensed text-2xl sm:text-3xl md:text-4xl font-black uppercase tracking-tight text-white">SHOP BY CATEGORY</h2>
+      </div>
+
+      <!-- Two Compact Category Cards Side-by-Side on Mobile & Desktop -->
+      <div class="grid grid-cols-2 gap-3 sm:gap-6 max-w-3xl mx-auto">
+        
+        <!-- Card 1: SHOP MEN -->
+        <a 
+          href="category-men.html" 
+          id="card-shop-men" 
+          class="group block relative overflow-hidden rounded-xl sm:rounded-2xl bg-neutral-900 border border-white/10 shadow-xl transition-all duration-300 hover:border-white"
+        >
+          <div class="relative aspect-[3/4] sm:aspect-[4/5] w-full overflow-hidden">
+            <img 
+              src="assets/shop-men-new.jpg" 
+              alt="Shop Men Sneaker Collection" 
+              class="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent"></div>
+            
+            <div class="absolute bottom-3 left-3 right-3 sm:bottom-5 sm:left-5 sm:right-5 flex items-end justify-between">
+              <div>
+                <h3 class="font-condensed text-base sm:text-xl md:text-2xl font-bold uppercase tracking-tight text-white group-hover:text-neutral-200 transition-colors">
+                  SHOP MEN
+                </h3>
+                <span class="text-[10px] sm:text-xs font-condensed tracking-wider text-neutral-400 uppercase hidden sm:block">Explore Men's Pairs</span>
+              </div>
+              <div class="w-7 h-7 sm:w-9 sm:h-9 rounded-full bg-white text-black flex items-center justify-center font-bold text-xs sm:text-sm group-hover:bg-[#25D366] group-hover:text-white transition-colors flex-shrink-0">
+                ↗
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <!-- Card 2: SHOP WOMEN -->
+        <a 
+          href="category-women.html" 
+          id="card-shop-women" 
+          class="group block relative overflow-hidden rounded-xl sm:rounded-2xl bg-neutral-900 border border-white/10 shadow-xl transition-all duration-300 hover:border-white"
+        >
+          <div class="relative aspect-[3/4] sm:aspect-[4/5] w-full overflow-hidden">
+            <img 
+              src="assets/shop-women-new.jpg" 
+              alt="Shop Women Sneaker Collection" 
+              class="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent"></div>
+            
+            <div class="absolute bottom-3 left-3 right-3 sm:bottom-5 sm:left-5 sm:right-5 flex items-end justify-between">
+              <div>
+                <h3 class="font-condensed text-base sm:text-xl md:text-2xl font-bold uppercase tracking-tight text-white group-hover:text-neutral-200 transition-colors">
+                  SHOP WOMEN
+                </h3>
+                <span class="text-[10px] sm:text-xs font-condensed tracking-wider text-neutral-400 uppercase hidden sm:block">Explore Women's Pairs</span>
+              </div>
+              <div class="w-7 h-7 sm:w-9 sm:h-9 rounded-full bg-white text-black flex items-center justify-center font-bold text-xs sm:text-sm group-hover:bg-[#25D366] group-hover:text-white transition-colors flex-shrink-0">
+                ↗
+              </div>
+            </div>
+          </div>
+        </a>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SECTION: UA QUALITY SNEAKERS - MEN & WOMEN SEPARATE SESSIONS -->
+  <section id="ua-quality-section" class="py-12 sm:py-16 bg-[#000000] text-white border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+      
+      <!-- UA QUALITY MEN SESSION -->
+      <div id="ua-quality-men-session">
+        <div class="mb-8 flex flex-col sm:flex-row sm:items-end justify-between border-b border-white/10 pb-4 gap-4">
+          <div>
+            <div class="flex items-center gap-2 mb-1">
+              <span class="inline-block w-2 h-2 rounded-full bg-[#25D366]"></span>
+              <span class="text-xs font-condensed tracking-widest font-bold uppercase text-neutral-400">AUTHENTIC ARCHIVE SILHOUETTES</span>
+            </div>
+            <h2 class="font-condensed text-2xl sm:text-4xl font-black uppercase tracking-wider text-white flex items-center gap-3">
+              UA QUALITY SNEAKERS <span class="text-xs sm:text-sm font-normal px-2.5 py-1 border border-white/20 text-neutral-300 font-condensed">MEN</span>
+            </h2>
+          </div>
+          <div class="flex items-center gap-2">
+            <a href="category-men.html" class="hidden sm:inline-block text-xs font-condensed tracking-wider font-bold uppercase text-neutral-400 hover:text-white mr-2">VIEW ALL MEN →</a>
+            <button onclick="slideSection('ua-quality-men-slider-track', -1)" class="w-9 h-9 rounded-full border border-white/20 bg-black text-white hover:bg-white hover:text-black flex items-center justify-center transition-colors" title="Slide Left">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+            </button>
+            <button onclick="slideSection('ua-quality-men-slider-track', 1)" class="w-9 h-9 rounded-full border border-white/20 bg-black text-white hover:bg-white hover:text-black flex items-center justify-center transition-colors" title="Slide Right">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="slider-section-container relative">
+          <div id="ua-quality-men-slider-track" class="slider-track no-scrollbar !bg-transparent !border-none">
+            <!-- Injected dynamically by app.js -->
+          </div>
+        </div>
+      </div>
+
+      <!-- UA QUALITY WOMEN SESSION -->
+      <div id="ua-quality-women-session">
+        <div class="mb-8 flex flex-col sm:flex-row sm:items-end justify-between border-b border-white/10 pb-4 gap-4">
+          <div>
+            <div class="flex items-center gap-2 mb-1">
+              <span class="inline-block w-2 h-2 rounded-full bg-[#25D366]"></span>
+              <span class="text-xs font-condensed tracking-widest font-bold uppercase text-neutral-400">ELEVATED PLATFORMS & RUNNERS (SIZE 36 - 40)</span>
+            </div>
+            <h2 class="font-condensed text-2xl sm:text-4xl font-black uppercase tracking-wider text-white flex items-center gap-3">
+              UA QUALITY SNEAKERS <span class="text-xs sm:text-sm font-normal px-2.5 py-1 border border-white/20 text-neutral-300 font-condensed">WOMEN</span>
+            </h2>
+          </div>
+          <div class="flex items-center gap-2">
+            <a href="category-women.html" class="hidden sm:inline-block text-xs font-condensed tracking-wider font-bold uppercase text-neutral-400 hover:text-white mr-2">VIEW ALL WOMEN →</a>
+            <button onclick="slideSection('ua-quality-women-slider-track', -1)" class="w-9 h-9 rounded-full border border-white/20 bg-black text-white hover:bg-white hover:text-black flex items-center justify-center transition-colors" title="Slide Left">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+            </button>
+            <button onclick="slideSection('ua-quality-women-slider-track', 1)" class="w-9 h-9 rounded-full border border-white/20 bg-black text-white hover:bg-white hover:text-black flex items-center justify-center transition-colors" title="Slide Right">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="slider-section-container relative">
+          <div id="ua-quality-women-slider-track" class="slider-track no-scrollbar !bg-transparent !border-none">
+            <!-- Injected dynamically by app.js -->
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SECTION: FLIP FLOPS & SLIDES COLLECTION (ALL BLACK THEME) -->
+  <section id="slides-section" class="py-16 bg-[#000000] text-white border-t border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="mb-8 flex justify-between items-end border-b border-white/10 pb-4">
+        <div>
+          <span class="text-xs font-condensed tracking-widest font-bold uppercase text-neutral-400 block mb-1">✦ STREET COMFORT EDIT</span>
+          <h2 class="font-condensed text-2xl md:text-4xl font-bold uppercase text-white tracking-tight">FLIP FLOPS & SLIDES</h2>
+          <span class="text-xs font-condensed text-neutral-400 font-bold uppercase">RELAXED STREET STYLE & BIO-FOAM ESSENTIALS</span>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button onclick="slideSection('slides-slider-track', -1)" class="w-9 h-9 rounded-full border border-white/20 bg-black text-white hover:bg-white hover:text-black flex items-center justify-center transition-colors" title="Slide Left">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          </button>
+          <button onclick="slideSection('slides-slider-track', 1)" class="w-9 h-9 rounded-full border border-white/20 bg-black text-white hover:bg-white hover:text-black flex items-center justify-center transition-colors" title="Slide Right">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="slider-section-container">
+        <div id="slides-slider-track" class="slider-track no-scrollbar !bg-transparent !border-none">
+          <!-- Populated dynamically with Flip Flops & Slides -->
+        </div>
+        <div class="slider-progress-wrapper !bg-white/10">
+          <div id="slides-progress-bar" class="slider-progress-bar !bg-white"></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- EDITORIAL INTERACTIVE CAMPAIGN (ILLUSTRATION-TO-REALITY INTERACTIVE COMPARISON SLIDER) -->
+  <section class="py-16 bg-[#080808] border-t border-b border-white/10 text-white">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="mb-8 flex flex-col sm:flex-row sm:items-end justify-between gap-3 border-b border-white/10 pb-4">
+        <div>
+          <span class="text-xs font-condensed tracking-widest uppercase text-neutral-400 block mb-1">✦ CONCEPT TO EXECUTION</span>
+          <h2 class="font-condensed text-2xl sm:text-4xl font-bold uppercase tracking-wider text-white">ILLUSTRATION TO REALITY</h2>
+        </div>
+        <div class="text-xs font-condensed tracking-wider uppercase text-neutral-400">
+          DRAG OR MOVE SLIDER TO REVEAL PHOTOGRAPHY
+        </div>
+      </div>
+
+      <!-- Interactive Comparison Container -->
+      <div id="interactive-reveal-card" class="relative w-full aspect-[16/9] max-h-[75vh] border border-white/20 overflow-hidden bg-black select-none cursor-ew-resize">
+        
+        <!-- Underlying Real Photography -->
+        <img 
+          src="assets/hero/hero-photo.jpg" 
+          alt="Realistic Sneaker Photography" 
+          class="absolute inset-0 w-full h-full object-contain object-center pointer-events-none"
+        />
+
+        <!-- Top Layer: Hand-drawn Illustration (Clipped by slider handle) -->
+        <div id="illustration-clip-box" class="absolute inset-0 w-full h-full overflow-hidden" style="clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);">
+          <img 
+            src="assets/hero/hero-illustration.jpg" 
+            alt="Hand Drawn Illustration" 
+            class="absolute inset-0 w-full h-full object-contain object-center pointer-events-none"
+          />
+        </div>
+
+        <!-- Vertical Divider Line & Draggable Handle -->
+        <div id="slider-split-line" class="absolute top-0 bottom-0 w-0.5 bg-white z-30 pointer-events-none" style="left: 50%;">
+          <div class="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-9 h-9 rounded-full bg-black border border-white text-white flex items-center justify-center text-xs font-mono font-bold shadow-2xl">
+            ⬚
+          </div>
+        </div>
+
+        <!-- Badges on corners -->
+        <div class="absolute top-4 left-4 z-20 px-3 py-1 bg-black/80 border border-white/20 text-[10px] font-condensed uppercase tracking-wider font-bold">
+          ILLUSTRATION
+        </div>
+        <div class="absolute top-4 right-4 z-20 px-3 py-1 bg-black/80 border border-white/20 text-[10px] font-condensed uppercase tracking-wider font-bold">
+          PHOTOGRAPHY
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: CLOGS & MULES COLLECTION (ALL BLACK THEME) -->
+  <section id="clogs-section" class="py-16 bg-[#000000] text-white border-t border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="mb-8 flex justify-between items-end border-b border-white/10 pb-4">
+        <div>
+          <span class="text-xs font-condensed tracking-widest font-bold uppercase text-neutral-400 block mb-1">✦ EVERYDAY ESSENTIALS</span>
+          <h2 class="font-condensed text-2xl md:text-4xl font-bold uppercase text-white tracking-tight">CLOGS & MULES</h2>
+          <span class="text-xs font-condensed text-neutral-400 font-bold uppercase">ARCHITECTURAL FOAM CLOGS & SNEAKER-MULE HYBRIDS</span>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button onclick="slideSection('clogs-slider-track', -1)" class="w-9 h-9 rounded-full border border-white/20 bg-black text-white hover:bg-white hover:text-black flex items-center justify-center transition-colors" title="Slide Left">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          </button>
+          <button onclick="slideSection('clogs-slider-track', 1)" class="w-9 h-9 rounded-full border border-white/20 bg-black text-white hover:bg-white hover:text-black flex items-center justify-center transition-colors" title="Slide Right">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="slider-section-container">
+        <div id="clogs-slider-track" class="slider-track no-scrollbar !bg-transparent !border-none">
+          <!-- Populated dynamically with Clogs -->
+        </div>
+        <div class="slider-progress-wrapper !bg-white/10">
+          <div id="clogs-progress-bar" class="slider-progress-bar !bg-white"></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FULL ARCHITECTURAL COLLECTION GRID (EXACT 3-COLUMN LAYOUT MATCHING KARB SCREENSHOT 2) -->
+  <section id="all-collection-grid-section" class="py-12 bg-black border-t border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section header -->
+      <div class="mb-8 flex justify-between items-baseline border-b border-white/10 pb-4">
+        <div>
+          <span class="text-xs font-condensed tracking-widest text-neutral-400 uppercase font-bold block mb-1">ALL SILHOUETTES</span>
+          <h2 class="font-condensed text-2xl sm:text-3xl font-bold uppercase tracking-wider text-white">HAUS COLLECTION</h2>
+        </div>
+        <span class="text-xs font-condensed tracking-widest text-neutral-400 uppercase font-bold">24 RELEASES</span>
+      </div>
+
+      <!-- 2 Columns Mobile, 2 Columns Tablet, 3 Columns Desktop -->
+      <div id="all-products-grid" class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-white/10 border border-white/10">
+        <!-- Injected dynamically by app.js with KARB card structure -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- BRAND EDITORIAL CAMPAIGN VIDEO (ABOVE REVIEWS - FULLY MOBILE RESPONSIVE) -->
+  <section id="brand-video-section" class="w-full bg-black border-t border-b border-white/10 overflow-hidden relative">
+    <div class="relative w-full h-[45vh] sm:h-[60vh] lg:h-[75vh] bg-black">
+      <video 
+        src="assets/video-brand.mp4" 
+        autoplay 
+        loop 
+        muted 
+        playsinline 
+        webkit-playsinline
+        class="w-full h-full object-cover object-center block"
+      ></video>
+      <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-black/30 pointer-events-none"></div>
+      
+      <!-- Video Caption Overlay -->
+      <div class="absolute bottom-4 left-4 sm:bottom-8 sm:left-8 lg:bottom-10 lg:left-12 z-20 pointer-events-none max-w-lg">
+        <span class="text-[10px] sm:text-xs font-condensed tracking-widest text-neutral-400 block mb-1 uppercase font-bold">
+          HAUS CAMPAIGN • FILM
+        </span>
+        <h2 class="font-condensed text-base sm:text-2xl lg:text-3xl font-bold tracking-tight text-white uppercase leading-snug drop-shadow-md">
+          REDEFINING CONTEMPORARY STREETWEAR.
+        </h2>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4: CUSTOMER REVIEWS (EXACT REPLICATION OF KARB SCREENSHOT 3) -->
+  <section id="reviews-section" class="py-16 bg-black border-t border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Title & Controls -->
+      <div class="mb-8 flex items-center justify-between">
+        <h2 class="font-condensed text-xl sm:text-2xl font-bold uppercase tracking-wider text-white">CUSTOMER REVIEWS</h2>
+        <div class="flex items-center gap-2">
+          <button onclick="document.getElementById('reviews-track').scrollBy({left: -320, behavior: 'smooth'})" class="w-8 h-8 rounded-full border border-white/20 bg-black text-white hover:bg-white hover:text-black flex items-center justify-center transition-colors">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          </button>
+          <button onclick="document.getElementById('reviews-track').scrollBy({left: 320, behavior: 'smooth'})" class="w-8 h-8 rounded-full border border-white/20 bg-black text-white hover:bg-white hover:text-black flex items-center justify-center transition-colors">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- 3-Column Reviews Cards Carousel (Matches Screenshot 3) -->
+      <div id="reviews-track" class="grid grid-cols-1 md:grid-cols-3 gap-4 overflow-x-auto no-scrollbar">
+        
+        <!-- Review 1 -->
+        <div class="p-6 bg-black border border-white/10 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-10 h-10 rounded-sm bg-[#E5B800] text-black font-condensed font-bold text-sm flex items-center justify-center">
+                YK
+              </div>
+              <div>
+                <div class="flex items-center gap-1.5 font-condensed font-bold text-sm uppercase text-white tracking-wider">
+                  <span>Yugal Kumar</span>
+                  <svg class="w-3.5 h-3.5 text-[#E5B800] fill-current" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                </div>
+              </div>
+            </div>
+
+            <!-- Star ratings -->
+            <div class="flex gap-1 text-[#E5B800] text-xs mb-3">
+              <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+            </div>
+
+            <p class="text-xs sm:text-sm text-neutral-300 leading-relaxed font-sans">
+              "Mujhe sneakers bahut zyada pasand aayi! Fit bhi ek number hai aur delivery time bhi super fast tha. Bhai full paisa vasool!"
+            </p>
+          </div>
+        </div>
+
+        <!-- Review 2 -->
+        <div class="p-6 bg-black border border-white/10 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-10 h-10 rounded-sm bg-[#E5B800] text-black font-condensed font-bold text-sm flex items-center justify-center">
+                VI
+              </div>
+              <div>
+                <div class="flex items-center gap-1.5 font-condensed font-bold text-sm uppercase text-white tracking-wider">
+                  <span>Vishu Sharma</span>
+                  <svg class="w-3.5 h-3.5 text-[#E5B800] fill-current" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex gap-1 text-[#E5B800] text-xs mb-3">
+              <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+            </div>
+
+            <p class="text-xs sm:text-sm text-neutral-300 leading-relaxed font-sans">
+              "Trusted website. Quality A1. Such a good pair I ever had, I love the comfort and quality of sole and leather. Humble team ❤️"
+            </p>
+          </div>
+        </div>
+
+        <!-- Review 3 -->
+        <div class="p-6 bg-black border border-white/10 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-10 h-10 rounded-sm bg-[#E5B800] text-black font-condensed font-bold text-sm flex items-center justify-center">
+                AM
+              </div>
+              <div>
+                <div class="flex items-center gap-1.5 font-condensed font-bold text-sm uppercase text-white tracking-wider">
+                  <span>Aman Verma</span>
+                  <svg class="w-3.5 h-3.5 text-[#E5B800] fill-current" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex gap-1 text-[#E5B800] text-xs mb-3">
+              <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+            </div>
+
+            <p class="text-xs sm:text-sm text-neutral-300 leading-relaxed font-sans">
+              "Thank you for the shoes! Everyone asks me where I got them from. Solid build and comfortable for daily wear."
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SECTION 5: BRAND STORY & NEWSLETTER FOOTER (EXACT REPLICATION OF KARB SCREENSHOT 4) -->
+  <footer id="site-footer" class="bg-black text-white border-t border-white/10">
+    
+    <!-- BACK TO TOP BUTTON (AS SEEN IN KARB SCREENSHOT 4) -->
+    <div class="border-b border-white/10 text-center py-4">
+      <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="text-xs font-condensed uppercase tracking-widest text-neutral-400 hover:text-white transition-colors font-bold">
+        BACK TO TOP
+      </button>
+    </div>
+
+    <!-- MAIN TWO-COLUMN SPLIT -->
+    <div class="max-w-7xl mx-auto px-5 sm:px-6 lg:px-12 py-10 sm:py-16 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 border-b border-white/10">
+      
+      <!-- LEFT COLUMN: HAUS OF SNEAKER BRAND IDENTITY (CLEAN & SHORT FOR MOBILE) -->
+      <div class="space-y-4 sm:space-y-5">
+        <a href="#" class="inline-block" title="HAUS OF SNEAKER" style="text-decoration:none;">
+          <span style="font-family:'Oswald',sans-serif;font-style:italic;font-weight:800;font-size:clamp(20px,2.5vw,28px);letter-spacing:-0.01em;line-height:1;white-space:nowrap;display:flex;align-items:baseline;gap:0.25em;">
+            <span style="color:#F5F5F5;">HAUS OF</span>
+            <span style="color:transparent;-webkit-text-stroke:1.4px #F5F5F5;">SNEAKERS</span>
+          </span>
+        </a>
+
+        <!-- Specification Badges -->
+        <div class="flex flex-wrap gap-1.5 sm:gap-2 text-[10px] sm:text-[11px] font-condensed uppercase tracking-wider font-bold">
+          <span class="px-2.5 py-1 bg-white/5 border border-white/15 text-neutral-200">UNISEX</span>
+          <span class="px-2.5 py-1 bg-white/5 border border-white/15 text-neutral-200">SHIPPING PAN INDIA</span>
+          <span class="px-2.5 py-1 bg-white/5 border border-white/15 text-neutral-200">RETURN | REPLACEMENT POLICY</span>
+        </div>
+
+        <!-- Short and punchy on mobile, SEO rich on desktop -->
+        <p class="text-xs sm:text-sm text-neutral-400 leading-relaxed font-sans max-w-lg">
+          India's independent streetwear sneaker boutique. Curated drops, verified authentic pairs, and door-to-door delivery across India.
+        </p>
+
+        <!-- Direct Contact Line -->
+        <div class="pt-2 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs font-condensed tracking-wider">
+          <a href="tel:8547023694" class="text-white hover:text-neutral-300 font-bold transition-colors">
+            PH: 8547023694
+          </a>
+          <span class="text-neutral-600">•</span>
+          <a href="https://wa.me/918547023694?text=Hello%20HAUS%20OF%20SNEAKERS%20team%2C%20I%20have%20an%20order%20inquiry." target="_blank" class="text-[#25D366] hover:underline font-bold">
+            WHATSAPP US
+          </a>
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN: NEWSLETTER -->
+      <div class="space-y-3 sm:space-y-4">
+        <p class="text-xs sm:text-sm font-sans text-neutral-300">
+          Join HAUS members — get 10% off your order with code <strong class="text-white">HAUS10</strong>.
+        </p>
+
+        <form onsubmit="event.preventDefault(); showToast('Subscribed to HAUS archive! Code HAUS10 applied.'); this.reset();" class="border border-white/20">
+          <input 
+            type="email" 
+            placeholder="your@email.address" 
+            required 
+            class="w-full bg-black text-white px-4 py-3 text-xs font-sans placeholder-neutral-500 focus:outline-none border-b border-white/20"
+          />
+          <button 
+            type="submit" 
+            class="w-full py-3 bg-black hover:bg-white hover:text-black text-white text-xs font-condensed tracking-widest uppercase font-bold transition-colors text-center"
+          >
+            SUBSCRIBE
+          </button>
+        </form>
+      </div>
+
+    </div>
+
+    <!-- BOTTOM LINKS: SEARCH, PRIVACY, REFUND, SHIPPING, TERMS, SOCIALS -->
+    <div class="max-w-7xl mx-auto px-5 sm:px-6 lg:px-12 py-6 sm:py-8 flex flex-col items-center gap-5">
+      <div class="flex flex-wrap items-center justify-center gap-4 sm:gap-8 text-[11px] sm:text-xs font-condensed uppercase tracking-wider text-neutral-400 font-bold">
+        <button onclick="openSearchDrawer()" class="hover:text-white transition-colors">SEARCH</button>
+        <a href="privacy-policy.html" class="hover:text-white transition-colors">PRIVACY POLICY</a>
+        <a href="return-and-refund.html" class="hover:text-white transition-colors">REFUND POLICY</a>
+        <a href="shipping-policy.html" class="hover:text-white transition-colors">SHIPPING POLICY</a>
+        <a href="terms-and-conditions.html" class="hover:text-white transition-colors">TERMS OF SERVICE</a>
+      </div>
+
+      <!-- Social icons -->
+      <div class="flex items-center gap-5 text-white text-sm">
+        <a href="https://www.instagram.com/hausofsneakers.co/" target="_blank" rel="noopener noreferrer" class="hover:text-neutral-400 transition-colors" title="Instagram @hausofsneakers.co">
+          <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </a>
+        <a href="https://wa.me/918547023694" target="_blank" rel="noopener noreferrer" class="hover:text-neutral-400 transition-colors" title="WhatsApp Chat">
+          <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12.004 0C5.372 0 0 5.373 0 12c0 2.115.548 4.103 1.512 5.836L.055 24l6.334-1.45A11.936 11.936 0 0012.004 24C18.628 24 24 18.627 24 12 24 5.373 18.628 0 12.004 0zm.015 21.84c-1.85 0-3.6-.502-5.12-1.373l-.367-.21-3.765.862.879-3.668-.23-.377a9.835 9.835 0 01-1.503-5.074c0-5.43 4.417-9.847 9.856-9.847 5.438 0 9.855 4.417 9.855 9.847 0 5.43-4.417 9.84-9.855 9.84zm5.405-7.378c-.296-.149-1.754-.866-2.026-.965-.272-.099-.47-.148-.668.149-.197.297-.767.965-.94 1.163-.173.198-.346.223-.643.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.297-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414-.074-.124-.272-.198-.57-.347z"/></svg>
+        </a>
+      </div>
+
+      <div class="text-[10px] sm:text-[11px] font-condensed tracking-widest text-neutral-500 uppercase text-center">
+        &copy; 2026 HAUS OF SNEAKER. ALL RIGHTS RESERVED.
+      </div>
+    </div>
+  </footer>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-2 text-[10px] font-mono-code text-neutral-500">
+        <span>HAUS OF SNEAKER &bull; UNISEX &bull; SHIPPING PAN INDIA &bull; PH: 8547023694</span>
+        <div class="flex items-center gap-4">
+          <a href="#faq-section" class="hover:text-white transition-colors">Privacy Policy</a>
+          <a href="#faq-section" class="hover:text-white transition-colors">Terms of Service</a>
+          <a href="#faq-section" class="hover:text-white transition-colors">Refund Policy</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- PIXEL-PERFECT OFFICIAL WHATSAPP WIDGET WITH TOOLTIP -->
+  <div class="whatsapp-widget-container">
+    <div class="whatsapp-tooltip">
+      <span class="w-2 h-2 rounded-full bg-[#25D366] animate-pulse"></span>
+      Need Sizing Help? Chat with HAUS OF SNEAKER
+    </div>
+    <a 
+      href="https://wa.me/918547023694?text=Hello%20HAUS%20OF%20SNEAKERS%20Team%2C%20I%27d%20like%20to%20know%20more%20about%20shoe%20sizing%20and%20availability%21" 
+      target="_blank" 
+      rel="noopener noreferrer" 
+      class="whatsapp-float-btn" 
+      title="Chat with HAUS OF SNEAKER on WhatsApp"
+      aria-label="Chat with HAUS OF SNEAKER on WhatsApp"
+    >
+      <div class="whatsapp-pulse"></div>
+      <svg class="w-7 h-7 fill-white" viewBox="0 0 24 24">
+        <path d="M12.004 0C5.372 0 0 5.373 0 12c0 2.115.548 4.103 1.512 5.836L.055 24l6.334-1.45A11.936 11.936 0 0012.004 24C18.628 24 24 18.627 24 12 24 5.373 18.628 0 12.004 0zm.015 21.84c-1.85 0-3.6-.502-5.12-1.373l-.367-.21-3.765.862.879-3.668-.23-.377a9.835 9.835 0 01-1.503-5.074c0-5.43 4.417-9.847 9.856-9.847 5.438 0 9.855 4.417 9.855 9.847 0 5.43-4.417 9.84-9.855 9.84zm5.405-7.378c-.296-.149-1.754-.866-2.026-.965-.272-.099-.47-.148-.668.149-.197.297-.767.965-.94 1.163-.173.198-.346.223-.643.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.297-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414-.074-.124-.272-.198-.57-.347z"/>
+      </svg>
+    </a>
+  </div>
+
+  <!-- SLIDE-OUT CART DRAWER (PURE BLACK, THIN BORDER, CONDENSED TYPOGRAPHY) -->
+  <div id="cart-drawer-backdrop" class="drawer-backdrop" onclick="closeCartDrawer()"></div>
+  <div id="cart-drawer-panel" class="drawer-panel bg-black text-white border-l border-white/10">
+    
+    <!-- Drawer Header -->
+    <div class="p-6 border-b border-white/10 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <h3 class="font-condensed text-lg font-bold uppercase tracking-widest text-white">YOUR SHOPPING BAG</h3>
+        <span class="cart-count-badge bg-white text-black text-xs font-condensed font-bold px-2 py-0.5 rounded-none">0</span>
+      </div>
+      <button onclick="closeCartDrawer()" class="p-2 text-neutral-400 hover:text-white transition-colors" title="Close bag">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+      </button>
+    </div>
+
+    <!-- Free Shipping Progress Threshold Meter -->
+    <div class="px-6 py-3 bg-[#080808] border-b border-white/10">
+      <div id="free-shipping-text" class="text-xs font-condensed tracking-wider uppercase text-neutral-300 mb-1.5 text-center">
+        ADD MORE FOR <strong class="text-white">FREE EXPRESS DELIVERY</strong>
+      </div>
+      <div class="w-full bg-white/10 h-1 rounded-none overflow-hidden">
+        <div id="free-shipping-bar" class="h-full bg-white transition-all duration-500 rounded-none" style="width: 0%"></div>
+      </div>
+    </div>
+
+    <!-- Cart Items Scroll Area -->
+    <div id="cart-items-container" class="flex-1 overflow-y-auto p-6 space-y-3 bg-black">
+      <!-- Injected dynamically -->
+    </div>
+
+    <!-- Empty State -->
+    <div id="cart-empty-state" class="hidden flex-1 flex flex-col items-center justify-center p-8 text-center bg-black">
+      <div class="w-16 h-16 border border-white/20 flex items-center justify-center mb-4 text-white">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+      </div>
+      <h4 class="font-condensed text-base font-bold uppercase tracking-wider text-white mb-1">YOUR BAG IS EMPTY</h4>
+      <p class="text-xs font-sans text-neutral-400 mb-6">Explore our latest footwear releases to find your pair.</p>
+      <button onclick="closeCartDrawer()" class="w-full py-3 bg-white text-black font-condensed text-xs font-bold uppercase tracking-widest hover:bg-neutral-200 transition-colors">EXPLORE FOOTWEAR</button>
+    </div>
+
+    <!-- Drawer Footer / Summary & Checkout -->
+    <div id="cart-summary-container" class="p-6 border-t border-white/10 bg-[#080808] space-y-4">
+      
+      <!-- Promo Code Field -->
+      <div class="flex border border-white/20">
+        <input 
+          id="promo-input" 
+          type="text" 
+          placeholder="DISCOUNT CODE (TRY 'HAUS10')" 
+          class="flex-1 bg-black text-white px-3 py-2.5 text-xs font-condensed uppercase font-bold focus:outline-none placeholder-neutral-500"
+        />
+        <button onclick="applyPromoCode()" class="bg-white text-black hover:bg-neutral-200 px-4 py-2 text-xs font-condensed font-bold uppercase tracking-wider">APPLY</button>
+      </div>
+
+      <!-- Financial Breakdown -->
+      <div class="space-y-1.5 text-xs font-condensed uppercase tracking-wider">
+        <div class="flex justify-between text-neutral-400">
+          <span>Subtotal</span>
+          <span id="cart-subtotal" class="font-bold text-white">Rs. 0.00</span>
+        </div>
+        <div id="cart-discount-row" class="flex justify-between text-emerald-400 font-bold hidden">
+          <span>PROMO CODE (HAUS10)</span>
+          <span id="cart-discount">-Rs. 0.00</span>
+        </div>
+        <div class="flex justify-between text-neutral-400">
+          <span>Estimated Shipping</span>
+          <span id="cart-shipping" class="font-bold text-white">FREE</span>
+        </div>
+        <div class="flex justify-between text-sm font-bold text-white pt-2 border-t border-white/10">
+          <span>TOTAL</span>
+          <span id="cart-grand-total">Rs. 0.00</span>
+        </div>
+      </div>
+
+      <!-- Checkout Triggers -->
+      <div class="space-y-2">
+        <button onclick="checkoutViaWhatsApp()" class="w-full py-3.5 bg-white hover:bg-neutral-200 text-black font-condensed text-sm font-bold uppercase tracking-widest transition-all flex items-center justify-center gap-2">
+          <span>CHECKOUT VIA WHATSAPP</span>
+        </button>
+        <button onclick="checkoutViaWhatsApp()" class="w-full py-3 bg-[#25D366] hover:bg-[#20ba59] text-white font-condensed text-xs font-bold uppercase tracking-widest transition-all flex items-center justify-center gap-2">
+          <svg class="w-4 h-4 fill-white" viewBox="0 0 24 24">
+            <path d="M12.004 0C5.372 0 0 5.373 0 12c0 2.115.548 4.103 1.512 5.836L.055 24l6.334-1.45A11.936 11.936 0 0012.004 24C18.628 24 24 18.627 24 12 24 5.373 18.628 0 12.004 0zm.015 21.84c-1.85 0-3.6-.502-5.12-1.373l-.367-.21-3.765.862.879-3.668-.23-.377a9.835 9.835 0 01-1.503-5.074c0-5.43 4.417-9.847 9.856-9.847 5.438 0 9.855 4.417 9.855 9.847 0 5.43-4.417 9.84-9.855 9.84zm5.405-7.378c-.296-.149-1.754-.866-2.026-.965-.272-.099-.47-.148-.668.149-.197.297-.767.965-.94 1.163-.173.198-.346.223-.643.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.297-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414-.074-.124-.272-.198-.57-.347z"/>
+          </svg>
+          <span>DIRECT WHATSAPP ORDER</span>
+        </button>
+      </div>
+
+      <p class="text-[10px] font-condensed tracking-wider text-center text-neutral-400 font-bold uppercase">
+        DIRECT ORDER CONFIRMATION • 14-DAY SIZE EXCHANGE
+      </p>
+    </div>
+
+  </div>
+
+  <!-- QUICK VIEW MODAL (KARB SCREENSHOT 5 LOOKALIKE) -->
+  <div id="quick-view-modal" class="hidden fixed inset-0 z-50 overflow-y-auto bg-black/90 backdrop-blur-md flex items-center justify-center p-0 sm:p-4">
+    <div class="relative w-full max-w-5xl bg-black border border-white/20 sm:my-8 min-h-screen sm:min-h-0 max-h-screen sm:max-h-[95vh] overflow-y-auto">
+      <button onclick="closeQuickView()" class="absolute top-4 right-4 z-30 w-10 h-10 border border-white/20 bg-black text-white hover:bg-white hover:text-black flex items-center justify-center font-bold text-sm transition-colors">
+        ✕
+      </button>
+      <div id="quick-view-content">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- CHECKOUT MODAL -->
+  <div id="checkout-modal" class="hidden fixed inset-0 z-50 overflow-y-auto bg-[#0a0a0a]/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="relative w-full max-w-2xl bg-white rounded-3xl overflow-hidden shadow-2xl my-8 border border-neutral-200">
+      <div class="p-6 border-b border-neutral-200 flex justify-between items-center bg-neutral-100">
+        <div class="flex items-center gap-2">
+          <span class="w-3 h-3 rounded-full bg-black"></span>
+          <h3 class="font-display text-lg font-bold uppercase text-neutral-900">SECURE CHECKOUT</h3>
+        </div>
+        <button onclick="closeCheckoutModal()" class="text-neutral-500 hover:text-black">✕</button>
+      </div>
+
+      <div id="checkout-modal-body" class="p-6 md:p-8">
+        <form onsubmit="processCheckoutOrder(event)" class="space-y-6">
+          
+          <div id="checkout-order-summary" class="bg-neutral-100 p-4 rounded-2xl border border-neutral-200">
+            <!-- Dynamic items summary -->
+          </div>
+
+          <!-- Customer & Shipping Form -->
+          <div>
+            <h4 class="font-display text-xs font-bold uppercase text-black mb-3 tracking-wider">1. SHIPPING ADDRESS</h4>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block text-[11px] font-mono-code font-bold uppercase text-neutral-700 mb-1">Full Name</label>
+                <input type="text" name="name" required placeholder="Alex Mercer" class="w-full bg-neutral-100 border border-neutral-300 rounded-xl px-3.5 py-2.5 text-xs font-sans focus:outline-none focus:border-black" />
+              </div>
+              <div>
+                <label class="block text-[11px] font-mono-code font-bold uppercase text-neutral-700 mb-1">Phone Number</label>
+                <input type="tel" name="phone" required placeholder="+91 98765 43210" class="w-full bg-neutral-100 border border-neutral-300 rounded-xl px-3.5 py-2.5 text-xs font-sans focus:outline-none focus:border-black" />
+              </div>
+              <div class="sm:col-span-2">
+                <label class="block text-[11px] font-mono-code font-bold uppercase text-neutral-700 mb-1">Street Address</label>
+                <input type="text" name="address" required placeholder="Apartment, suite, street address" class="w-full bg-neutral-100 border border-neutral-300 rounded-xl px-3.5 py-2.5 text-xs font-sans focus:outline-none focus:border-black" />
+              </div>
+              <div>
+                <label class="block text-[11px] font-mono-code font-bold uppercase text-neutral-700 mb-1">City</label>
+                <input type="text" name="city" required placeholder="Mumbai / Delhi / Bangalore" class="w-full bg-neutral-100 border border-neutral-300 rounded-xl px-3.5 py-2.5 text-xs font-sans focus:outline-none focus:border-black" />
+              </div>
+              <div>
+                <label class="block text-[11px] font-mono-code font-bold uppercase text-neutral-700 mb-1">Postal Code</label>
+                <input type="text" name="postal" required placeholder="400001" class="w-full bg-neutral-100 border border-neutral-300 rounded-xl px-3.5 py-2.5 text-xs font-sans focus:outline-none focus:border-black" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Payment Options -->
+          <div>
+            <h4 class="font-display text-xs font-bold uppercase text-black mb-3 tracking-wider">2. SELECT PAYMENT MODE</h4>
+            <div class="grid grid-cols-2 gap-3">
+              <label class="border-2 border-neutral-300 rounded-2xl p-3.5 flex items-center gap-3 cursor-pointer hover:border-black transition-all bg-neutral-100">
+                <input type="radio" name="payment" value="prepaid-upi" checked class="accent-black" />
+                <div>
+                  <div class="font-display font-bold text-xs uppercase text-neutral-900">UPI / Cards (Prepaid)</div>
+                  <div class="text-[10px] font-mono-code text-black font-bold">10% OFF APPLIED</div>
+                </div>
+              </label>
+
+              <label class="border border-neutral-300 rounded-2xl p-3.5 flex items-center gap-3 cursor-pointer hover:border-black transition-all">
+                <input type="radio" name="payment" value="cod" class="accent-black" />
+                <div>
+                  <div class="font-display font-bold text-xs uppercase text-neutral-900">Cash on Delivery</div>
+                  <div class="text-[10px] font-mono-code text-neutral-500">Pay at your doorstep</div>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <!-- Submit Order -->
+          <button type="submit" class="w-full py-4 bg-black hover:bg-neutral-800 text-white font-display text-sm font-bold uppercase tracking-wider rounded-2xl shadow-xl transition-all">
+            Confirm & Place Order
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- REEL LOOKBOOK MODAL -->
+  <div id="reel-modal" class="hidden fixed inset-0 z-50 bg-[#0a0a0a]/85 backdrop-blur-md flex items-center justify-center p-4" onclick="closeReelModal()">
+    <div id="reel-modal-container" onclick="event.stopPropagation()">
+      <!-- Populated dynamically by app.js -->
+    </div>
+  </div>
+
+  <!-- SEARCH DRAWER / MODAL -->
+  <div id="search-drawer" class="hidden fixed inset-0 z-50 bg-[#0a0a0a]/60 backdrop-blur-sm flex items-start justify-center pt-20 px-4" onclick="closeSearchDrawer()">
+    <div class="relative w-full max-w-2xl bg-white rounded-3xl overflow-hidden shadow-2xl p-6 border-2 border-neutral-200" onclick="event.stopPropagation()">
+      <div class="flex items-center gap-3 border-b border-neutral-200 pb-4">
+        <svg class="w-5 h-5 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+        <input 
+          id="search-input" 
+          type="text" 
+          placeholder="SEARCH SILHOUETTE, STYLE, MEN, WOMEN..." 
+          oninput="handleSearch(this.value)"
+          class="flex-1 text-sm font-mono-code uppercase font-bold focus:outline-none placeholder-neutral-400 text-neutral-900"
+        />
+        <button onclick="closeSearchDrawer()" class="text-neutral-400 hover:text-black">✕</button>
+      </div>
+
+      <!-- Quick Tags -->
+      <div class="flex gap-2 py-3 border-b border-neutral-100 overflow-x-auto text-[11px] font-mono-code">
+        <span class="text-black uppercase font-bold self-center">Trending:</span>
+        <button onclick="handleSearch('fat-lace')" class="bg-neutral-100 hover:bg-neutral-200 text-black px-3 py-1 rounded-full font-bold">Fat Lace</button>
+        <button onclick="handleSearch('oldskool')" class="bg-neutral-100 hover:bg-neutral-200 text-black px-3 py-1 rounded-full font-bold">Canvas Skate</button>
+        <button onclick="handleSearch('air-stride')" class="bg-neutral-100 hover:bg-neutral-200 text-black px-3 py-1 rounded-full font-bold">Air Stride</button>
+        <button onclick="handleSearch('chelsea')" class="bg-neutral-100 hover:bg-neutral-200 text-black px-3 py-1 rounded-full font-bold">Boots</button>
+        <button onclick="handleSearch('platform')" class="bg-neutral-100 hover:bg-neutral-200 text-black px-3 py-1 rounded-full font-bold">Platform</button>
+      </div>
+
+      <div id="search-results" class="max-h-80 overflow-y-auto mt-2 divide-y divide-blue-50">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- SIZE GUIDE MODAL -->
+  <div id="size-guide-modal" class="hidden fixed inset-0 z-50 bg-[#0a0a0a]/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="relative w-full max-w-xl bg-white rounded-3xl overflow-hidden shadow-2xl p-6 md:p-8 border-2 border-neutral-200">
+      <div class="flex justify-between items-center mb-6">
+        <div>
+          <h3 class="font-display text-xl font-black uppercase text-neutral-900">FOOTWEAR SIZING CHART</h3>
+          <p class="text-xs font-mono-code text-black uppercase mt-0.5 font-bold">Accurate conversions for Men & Women</p>
+        </div>
+        <button onclick="closeSizeGuide()" class="text-neutral-400 hover:text-black text-lg">✕</button>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-xs font-mono-code text-left border-collapse">
+          <thead>
+            <tr class="bg-neutral-100 border-b border-neutral-300 text-black uppercase font-bold">
+              <th class="p-2.5">UK Size</th>
+              <th class="p-2.5">EU Size</th>
+              <th class="p-2.5">US Men</th>
+              <th class="p-2.5">US Women</th>
+              <th class="p-2.5">Foot Length (CM)</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-blue-100">
+            <tr><td class="p-2.5 font-bold">UK 3</td><td class="p-2.5">EU 36</td><td class="p-2.5">-</td><td class="p-2.5 font-bold text-black">US 5</td><td class="p-2.5">22.5 cm</td></tr>
+            <tr><td class="p-2.5 font-bold">UK 4</td><td class="p-2.5">EU 37</td><td class="p-2.5">-</td><td class="p-2.5 font-bold text-black">US 6</td><td class="p-2.5">23.5 cm</td></tr>
+            <tr><td class="p-2.5 font-bold">UK 5</td><td class="p-2.5">EU 38</td><td class="p-2.5">-</td><td class="p-2.5 font-bold text-black">US 7</td><td class="p-2.5">24.2 cm</td></tr>
+            <tr><td class="p-2.5 font-bold">UK 6</td><td class="p-2.5">EU 39 / 40</td><td class="p-2.5">US 6.5</td><td class="p-2.5 font-bold text-black">US 8</td><td class="p-2.5">25.0 cm</td></tr>
+            <tr><td class="p-2.5 font-bold">UK 7</td><td class="p-2.5">EU 41</td><td class="p-2.5 font-bold text-black">US 7.5</td><td class="p-2.5">US 9</td><td class="p-2.5">25.8 cm</td></tr>
+            <tr><td class="p-2.5 font-bold">UK 8</td><td class="p-2.5">EU 42</td><td class="p-2.5 font-bold text-black">US 8.5</td><td class="p-2.5">US 10</td><td class="p-2.5">26.6 cm</td></tr>
+            <tr><td class="p-2.5 font-bold">UK 9</td><td class="p-2.5">EU 43</td><td class="p-2.5 font-bold text-black">US 9.5</td><td class="p-2.5">-</td><td class="p-2.5">27.5 cm</td></tr>
+            <tr><td class="p-2.5 font-bold">UK 10</td><td class="p-2.5">EU 44 / 45</td><td class="p-2.5 font-bold text-black">US 10.5</td><td class="p-2.5">-</td><td class="p-2.5">28.3 cm</td></tr>
+            <tr><td class="p-2.5 font-bold">UK 11</td><td class="p-2.5">EU 46</td><td class="p-2.5 font-bold text-black">US 11.5</td><td class="p-2.5">-</td><td class="p-2.5">29.1 cm</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="mt-4 p-3 bg-neutral-100 rounded-xl text-[11px] font-mono-code text-neutral-800 border border-neutral-200">
+        💡 <strong>Pro Sizing Tip:</strong> For chunky boots & runners, if you are between sizes, we recommend sizing up by half/one size for comfortable toe box space.
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- SCRIPTS -->
+  <script src="js/products.js?v=1794910245"></script>
+  <script src="js/app.js?v=1794910245"></script>
+  <script>
+    function filterByGenderNav(gender) {
+      const tab = document.querySelector(`.gender-tab[data-gender="${gender}"]`);
+      if (tab) tab.click();
+      closeMobileNav();
+    }
+    function closeMobileNav() {
+      const mobileNav = document.getElementById('mobile-nav-panel');
+      if (mobileNav) mobileNav.classList.add('hidden');
+    }
+  
+    function toggleHeroEntrySound() {
+      const vid = document.getElementById('hero-entry-video');
+      const iconMuted = document.getElementById('hero-sound-icon-muted');
+      const iconUnmuted = document.getElementById('hero-sound-icon-unmuted');
+      const label = document.getElementById('hero-sound-label');
+      if (!vid) return;
+      vid.muted = !vid.muted;
+      if (vid.muted) {
+        if (iconMuted) iconMuted.classList.remove('hidden');
+        if (iconUnmuted) iconUnmuted.classList.add('hidden');
+        if (label) label.textContent = 'UNMUTE';
+      } else {
+        if (iconMuted) iconMuted.classList.add('hidden');
+        if (iconUnmuted) iconUnmuted.classList.remove('hidden');
+        if (label) label.textContent = 'MUTE';
+      }
+    }
+  </script>
+</body>
+</html>
+
+

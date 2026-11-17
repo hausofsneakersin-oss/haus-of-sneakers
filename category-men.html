@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Men's Sneakers — HAUS OF SNEAKER</title>
+  <meta name="description" content="Explore luxury architectural footwear for Men and Women at HAUS OF SNEAKER." />
+  
+  <link rel="icon" type="image/jpeg" href="assets/haus-og-preview.jpg" />
+
+  <!-- Google Fonts: Bebas Neue, Oswald, Roboto Condensed, Syne, Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800;900&family=Oswald:ital,wght@0,300..700;1,300..700&family=Roboto+Condensed:ital,wght@0,300..900;1,300..900&family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            headline: ['"Bebas Neue"', 'sans-serif'],
+            condensed: ['"Roboto Condensed"', 'sans-serif'],
+            oswald: ['"Oswald"', 'sans-serif'],
+            display: ['Syne', 'sans-serif'],
+            mono: ['"Space Grotesk"', 'monospace'],
+            sans: ['Inter', 'sans-serif']
+          },
+          colors: {
+            core: {
+              blue: '#ffffff',
+              hover: '#f5f5f5',
+              deep: '#000000',
+              light: '#0a0a0a',
+              ice: '#111111',
+              border: 'rgba(255,255,255,0.12)'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css?v=1794910245-16" />
+</head>
+<body class="bg-black text-white selection:bg-white selection:text-black flex flex-col min-h-screen">
+
+  <!-- SITE HEADER / NAVBAR -->
+  <header class="site-header bg-black text-white border-b border-white/10 sticky top-0 z-50">
+    <div class="w-full px-5 lg:px-12 h-16 sm:h-20 flex items-center justify-between">
+      
+      <!-- LEFT: HAUS OF SNEAKER BRAND LOGO -->
+      <div class="flex items-center">
+        <a href="index.html" class="flex items-center group py-2" title="HAUS OF SNEAKER" style="text-decoration:none;">
+          <span style="font-family:'Oswald',sans-serif;font-style:italic;font-weight:800;font-size:clamp(17px,2.2vw,24px);letter-spacing:-0.01em;line-height:1;white-space:nowrap;display:flex;align-items:baseline;gap:0.25em;">
+            <span style="color:#F2F2F2;">HAUS OF</span>
+            <span style="color:transparent;-webkit-text-stroke:1.4px #F2F2F2;">SNEAKER</span>
+          </span>
+        </a>
+      </div>
+
+      <!-- CENTER: DESKTOP NAVIGATION LINKS -->
+      <nav class="hidden lg:flex items-center gap-10 text-xs xl:text-sm font-condensed tracking-widest uppercase font-bold text-[#EDEDED]" id="desktop-main-nav">
+        <a href="index.html" class="nav-link relative py-2 hover:text-white transition-colors duration-200">
+          <span>HOME</span>
+        </a>
+        <a href="category-men.html" class="nav-link relative py-2 hover:text-white transition-colors duration-200" id="nav-men-link">
+          <span>MEN</span>
+        </a>
+        <a href="category-women.html" class="nav-link relative py-2 hover:text-white transition-colors duration-200" id="nav-women-link">
+          <span>WOMEN</span>
+        </a>
+        <a href="index.html#gender-filter-section" class="nav-link relative py-2 hover:text-white transition-colors duration-200">
+          <span>ALL DROPS</span>
+        </a>
+        <a href="index.html#site-footer" class="nav-link relative py-2 hover:text-white transition-colors duration-200">
+          <span>CONTACT</span>
+        </a>
+      </nav>
+
+      <!-- RIGHT: ACTIONS & MOBILE HAMBURGER -->
+      <div class="flex items-center gap-2 sm:gap-4 text-white">
+        <button onclick="openSearchDrawer()" class="p-2 text-[#EDEDED] hover:text-white transition-colors" title="Search footwear" aria-label="Search">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+        </button>
+
+        <button onclick="openCartDrawer()" class="p-2 text-[#EDEDED] hover:text-white relative transition-colors flex items-center" title="Shopping Bag" aria-label="Shopping Bag">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+          <span class="cart-count-badge font-condensed font-bold text-[10px] sm:text-xs ml-1">0</span>
+        </button>
+
+        <button id="mobile-menu-btn" class="lg:hidden p-2 text-white hover:text-neutral-300 focus:outline-none transition-colors" aria-label="Toggle navigation menu" title="Menu">
+          <svg id="hamburger-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+          <svg id="close-menu-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Mobile Nav Slide Panel -->
+    <div id="mobile-nav-panel" class="hidden lg:hidden border-t border-white/10 bg-black/95 backdrop-blur-md px-6 py-6 space-y-2 font-condensed font-bold text-lg uppercase tracking-widest text-[#EDEDED]">
+      <a href="index.html" onclick="closeMobileNav()" class="mobile-nav-item flex items-center justify-between py-3 border-b border-white/10 hover:text-white transition-colors">
+        <span>HOME</span>
+        <svg class="w-4 h-4 text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </a>
+      <a href="category-men.html" onclick="closeMobileNav()" class="mobile-nav-item flex items-center justify-between py-3 border-b border-white/10 hover:text-white transition-colors">
+        <span>SHOP MEN</span>
+        <svg class="w-4 h-4 text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </a>
+      <a href="category-women.html" onclick="closeMobileNav()" class="mobile-nav-item flex items-center justify-between py-3 border-b border-white/10 hover:text-white transition-colors">
+        <span>SHOP WOMEN</span>
+        <svg class="w-4 h-4 text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </a>
+      <a href="index.html#site-footer" onclick="closeMobileNav()" class="mobile-nav-item flex items-center justify-between py-3 hover:text-white transition-colors">
+        <span>CONTACT</span>
+        <svg class="w-4 h-4 text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </header>
+
+  <!-- CATEGORY BANNER & HEADER -->
+  <main class="flex-grow py-8 md:py-16 bg-black text-white">
+    <div class="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
+      
+      <!-- Breadcrumb -->
+      <nav class="mb-6 flex items-center gap-2 text-xs font-condensed tracking-wider text-neutral-400 uppercase" aria-label="Breadcrumb">
+        <a href="index.html" class="hover:text-white transition-colors">HOME</a>
+        <span>/</span>
+        <a href="index.html#shop-by-category-section" class="hover:text-white transition-colors">CATEGORIES</a>
+        <span>/</span>
+        <span id="page-breadcrumb-category" class="text-white font-bold">MEN'S SNEAKERS</span>
+      </nav>
+
+      <!-- Category Hero Banner with Dynamic Info -->
+      <div class="mb-10 p-8 sm:p-12 border border-white/10 bg-neutral-900/40 rounded-2xl relative overflow-hidden flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <div class="relative z-10 max-w-xl">
+          <span class="text-xs font-condensed tracking-widest font-bold uppercase text-[#25D366] block mb-2">✦ OFFICIAL CATEGORY EDITORIAL</span>
+          <h1 id="category-main-title" class="font-condensed text-4xl sm:text-6xl font-black uppercase tracking-tight text-white mb-3">
+            MEN'S COLLECTION
+          </h1>
+          <p id="category-main-desc" class="text-xs sm:text-sm font-sans text-neutral-300 leading-relaxed">
+            Architectural high-tops, vulcanized skate profiles, and heavy lug silhouettes crafted specifically for men.
+          </p>
+        </div>
+
+        <!-- Quick Switcher Tabs -->
+        <div class="relative z-10 flex items-center gap-2 flex-wrap">
+          <a href="category-men.html" id="btn-switch-men" class="px-5 py-2.5 text-xs font-condensed font-bold uppercase tracking-wider border border-white bg-white text-black transition-all">
+            Men's Category
+          </a>
+          <a href="category-women.html" id="btn-switch-women" class="px-5 py-2.5 text-xs font-condensed font-bold uppercase tracking-wider border border-white/20 bg-black text-neutral-300 hover:border-white hover:text-white transition-all">
+            Women's Category
+          </a>
+          <a href="index.html" class="px-5 py-2.5 text-xs font-condensed font-bold uppercase tracking-wider text-neutral-400 hover:text-white transition-all">
+            ← Back to Home
+          </a>
+        </div>
+      </div>
+
+      <!-- Controls & Count Bar -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-4 mb-8">
+        <div>
+          <span id="category-item-count" class="text-xs font-condensed tracking-wider font-bold text-neutral-400 uppercase">
+            SHOWING ALL PRODUCTS
+          </span>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <span class="text-xs font-condensed text-neutral-400 font-bold uppercase">Sort:</span>
+          <select id="sort-select" class="bg-black border border-white/20 text-white py-1 px-3 text-xs font-condensed font-bold uppercase cursor-pointer focus:outline-none">
+            <option value="featured">Featured First</option>
+            <option value="price-low">Price: Low to High</option>
+            <option value="price-high">Price: High to Low</option>
+            <option value="rating">Top Rated (5.0★)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Products Grid -->
+      <div id="category-page-grid" class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
+        <!-- Injected dynamically by page script -->
+      </div>
+
+    </div>
+  </main>
+
+  <!-- QUICK VIEW MODAL (Reused from existing main site) -->
+  <div id="quickview-backdrop" class="drawer-backdrop" onclick="closeQuickView()"></div>
+  <div id="quickview-modal" class="quickview-dialog fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none opacity-0 transition-opacity duration-300">
+    <div class="relative w-full max-w-4xl bg-black border border-white/20 p-6 md:p-8 text-white max-h-[90vh] overflow-y-auto pointer-events-auto">
+      <button onclick="closeQuickView()" class="absolute top-4 right-4 text-neutral-400 hover:text-white text-xl">✕</button>
+      <div id="quickview-content" class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center"></div>
+    </div>
+  </div>
+
+  <!-- SITE FOOTER -->
+  <footer id="site-footer" class="bg-black text-white border-t border-white/10 mt-auto">
+    <div class="max-w-7xl mx-auto px-5 sm:px-6 lg:px-12 py-10 sm:py-16 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 border-b border-white/10">
+      
+      <!-- LEFT COLUMN -->
+      <div class="space-y-4 sm:space-y-5">
+        <a href="index.html" class="inline-block" title="HAUS OF SNEAKER" style="text-decoration:none;">
+          <span style="font-family:'Oswald',sans-serif;font-style:italic;font-weight:800;font-size:clamp(20px,2.5vw,28px);letter-spacing:-0.01em;line-height:1;white-space:nowrap;display:flex;align-items:baseline;gap:0.25em;">
+            <span style="color:#F5F5F5;">HAUS OF</span>
+            <span style="color:transparent;-webkit-text-stroke:1.4px #F5F5F5;">SNEAKER</span>
+          </span>
+        </a>
+
+        <div class="flex flex-wrap gap-1.5 sm:gap-2 text-[10px] sm:text-[11px] font-condensed uppercase tracking-wider font-bold">
+          <span class="px-2.5 py-1 bg-white/5 border border-white/15 text-neutral-200">UNISEX</span>
+          <span class="px-2.5 py-1 bg-white/5 border border-white/15 text-neutral-200">SHIPPING PAN INDIA</span>
+          <span class="px-2.5 py-1 bg-white/5 border border-white/15 text-neutral-200">RETURN | REPLACEMENT POLICY</span>
+        </div>
+
+        <p class="text-xs sm:text-sm text-neutral-400 leading-relaxed font-sans max-w-lg">
+          India's independent streetwear sneaker boutique. Curated drops, verified authentic pairs, and door-to-door delivery across India.
+        </p>
+
+        <div class="pt-2 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs font-condensed tracking-wider">
+          <a href="tel:8547023694" class="text-white hover:text-neutral-300 font-bold transition-colors">
+            PH: 8547023694
+          </a>
+          <span class="text-neutral-600">•</span>
+          <a href="https://wa.me/918547023694?text=Hello%20HAUS%20OF%20SNEAKER%20team%2C%20I%20have%20an%20order%20inquiry." target="_blank" class="text-[#25D366] hover:underline font-bold">
+            WHATSAPP US
+          </a>
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN: NEWSLETTER -->
+      <div class="space-y-3 sm:space-y-4">
+        <p class="text-xs sm:text-sm font-sans text-neutral-300">
+          Join HAUS members — get 10% off your order with code <strong class="text-white">HAUS10</strong>.
+        </p>
+        <form onsubmit="event.preventDefault(); showToast('Subscribed to HAUS archive! Code HAUS10 applied.'); this.reset();" class="border border-white/20">
+          <input 
+            type="email" 
+            placeholder="your@email.address" 
+            required 
+            class="w-full bg-black text-white px-4 py-3 text-xs font-sans placeholder-neutral-500 focus:outline-none border-b border-white/20"
+          />
+          <button 
+            type="submit" 
+            class="w-full py-3 bg-black hover:bg-white hover:text-black text-white text-xs font-condensed tracking-widest uppercase font-bold transition-colors text-center"
+          >
+            SUBSCRIBE
+          </button>
+        </form>
+      </div>
+
+    </div>
+
+    <!-- BOTTOM LINKS -->
+    <div class="max-w-7xl mx-auto px-5 sm:px-6 lg:px-12 py-6 sm:py-8 flex flex-col items-center gap-5">
+      <div class="flex flex-wrap items-center justify-center gap-4 sm:gap-8 text-[11px] sm:text-xs font-condensed uppercase tracking-wider text-neutral-400 font-bold">
+        <button onclick="openSearchDrawer()" class="hover:text-white transition-colors">SEARCH</button>
+        <a href="privacy-policy.html" class="hover:text-white transition-colors">PRIVACY POLICY</a>
+        <a href="return-and-refund.html" class="hover:text-white transition-colors">REFUND POLICY</a>
+        <a href="shipping-policy.html" class="hover:text-white transition-colors">SHIPPING POLICY</a>
+        <a href="terms-and-conditions.html" class="hover:text-white transition-colors">TERMS OF SERVICE</a>
+      </div>
+
+      <div class="flex items-center gap-5 text-white text-sm">
+        <a href="https://www.instagram.com/hausofsneakers.co/" target="_blank" rel="noopener noreferrer" class="hover:text-neutral-400 transition-colors" title="Instagram @hausofsneakers.co">
+          <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </a>
+        <a href="https://wa.me/918547023694" target="_blank" rel="noopener noreferrer" class="hover:text-neutral-400 transition-colors" title="WhatsApp Chat">
+          <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12.004 0C5.372 0 0 5.373 0 12c0 2.115.548 4.103 1.512 5.836L.055 24l6.334-1.45A11.936 11.936 0 0012.004 24C18.628 24 24 18.627 24 12 24 5.373 18.628 0 12.004 0zm.015 21.84c-1.85 0-3.6-.502-5.12-1.373l-.367-.21-3.765.862.879-3.668-.23-.377a9.835 9.835 0 01-1.503-5.074c0-5.43 4.417-9.847 9.856-9.847 5.438 0 9.855 4.417 9.855 9.847 0 5.43-4.417 9.84-9.855 9.84zm5.405-7.378c-.296-.149-1.754-.866-2.026-.965-.272-.099-.47-.148-.668.149-.197.297-.767.965-.94 1.163-.173.198-.346.223-.643.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.297-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414-.074-.124-.272-.198-.57-.347z"/></svg>
+        </a>
+      </div>
+
+      <div class="text-[10px] sm:text-[11px] font-condensed tracking-widest text-neutral-500 uppercase text-center">
+        &copy; 2026 HAUS OF SNEAKER. ALL RIGHTS RESERVED.
+      </div>
+    </div>
+  </footer>
+
+  <!-- OFFICIAL WHATSAPP WIDGET -->
+  <div class="whatsapp-widget-container">
+    <div class="whatsapp-tooltip">
+      <span class="w-2 h-2 rounded-full bg-[#25D366] animate-pulse"></span>
+      Need Sizing Help? Chat with HAUS OF SNEAKER
+    </div>
+    <a 
+      href="https://wa.me/918547023694?text=Hello%20HAUS%20OF%20SNEAKER%20Team%2C%20I%27d%20like%20to%20know%20more%20about%20shoe%20sizing%20and%20availability%21" 
+      target="_blank" 
+      rel="noopener noreferrer" 
+      class="whatsapp-float-btn" 
+      title="Chat with HAUS OF SNEAKER on WhatsApp"
+      aria-label="Chat with HAUS OF SNEAKER on WhatsApp"
+    >
+      <div class="whatsapp-pulse"></div>
+      <svg class="w-7 h-7 fill-white" viewBox="0 0 24 24">
+        <path d="M12.004 0C5.372 0 0 5.373 0 12c0 2.115.548 4.103 1.512 5.836L.055 24l6.334-1.45A11.936 11.936 0 0012.004 24C18.628 24 24 18.627 24 12 24 5.373 18.628 0 12.004 0zm.015 21.84c-1.85 0-3.6-.502-5.12-1.373l-.367-.21-3.765.862.879-3.668-.23-.377a9.835 9.835 0 01-1.503-5.074c0-5.43 4.417-9.847 9.856-9.847 5.438 0 9.855 4.417 9.855 9.847 0 5.43-4.417 9.84-9.855 9.84zm5.405-7.378c-.296-.149-1.754-.866-2.026-.965-.272-.099-.47-.148-.668.149-.197.297-.767.965-.94 1.163-.173.198-.346.223-.643.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.297-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414-.074-.124-.272-.198-.57-.347z"/>
+      </svg>
+    </a>
+  </div>
+
+  <!-- SLIDE-OUT CART DRAWER -->
+  <div id="cart-drawer-backdrop" class="drawer-backdrop" onclick="closeCartDrawer()"></div>
+  <aside id="cart-drawer" class="drawer-panel" aria-label="Shopping Cart">
+    <div class="h-full flex flex-col justify-between">
+      <div class="p-6 border-b border-white/10 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <h3 class="font-condensed text-lg font-bold uppercase tracking-wider text-white">Shopping Bag</h3>
+          <span class="cart-count-badge text-xs font-condensed font-bold bg-white text-black px-2 py-0.5">0</span>
+        </div>
+        <button onclick="closeCartDrawer()" class="p-2 text-neutral-400 hover:text-white">✕</button>
+      </div>
+      <div id="cart-items-container" class="flex-1 overflow-y-auto p-6 space-y-4"></div>
+      <div class="p-6 border-t border-white/10 bg-neutral-900/50">
+        <div class="flex justify-between items-center mb-4">
+          <span class="text-xs font-condensed text-neutral-400 uppercase font-bold">Subtotal:</span>
+          <span id="cart-subtotal" class="font-condensed text-lg font-bold text-white">₹0</span>
+        </div>
+        <button onclick="checkoutViaWhatsApp()" class="w-full py-4 bg-[#25D366] hover:bg-[#20ba59] text-white font-condensed text-sm font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-2">
+          <span>Checkout via WhatsApp</span>
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- SEARCH DRAWER / MODAL -->
+  <div id="search-drawer" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-start justify-center pt-20 px-4" onclick="closeSearchDrawer()">
+    <div class="relative w-full max-w-2xl bg-neutral-900 rounded-2xl overflow-hidden shadow-2xl p-6 border border-white/20" onclick="event.stopPropagation()">
+      <div class="flex items-center justify-between border-b border-white/10 pb-4 mb-4">
+        <div class="flex items-center gap-3">
+          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+          <h3 class="font-condensed text-base font-bold uppercase text-white tracking-wider">Search Footwear</h3>
+        </div>
+        <button onclick="closeSearchDrawer()" class="text-neutral-400 hover:text-white text-lg font-bold p-1">✕</button>
+      </div>
+      <input 
+        id="search-input" 
+        type="text" 
+        placeholder="Search by name, silhouette, brand (e.g. Phantom, Platform)..." 
+        class="w-full p-4 border border-white/20 bg-black text-white font-sans text-sm rounded-xl focus:outline-none focus:border-white"
+        oninput="handleSearch(this.value)"
+      />
+      <div id="search-results" class="mt-4 max-h-80 overflow-y-auto space-y-2"></div>
+    </div>
+  </div>
+
+  
+  <!-- QUICK VIEW MODAL -->
+  <div id="quick-view-modal" class="hidden fixed inset-0 z-50 overflow-y-auto bg-black/90 backdrop-blur-md flex items-center justify-center p-0 sm:p-4">
+    <div class="relative w-full max-w-5xl bg-black border border-white/20 sm:my-8 min-h-screen sm:min-h-0 max-h-screen sm:max-h-[95vh] overflow-y-auto">
+      <button onclick="closeQuickView()" class="absolute top-4 right-4 z-30 w-10 h-10 border border-white/20 bg-black text-white hover:bg-white hover:text-black flex items-center justify-center font-bold text-sm transition-colors">
+        ✕
+      </button>
+      <div id="quick-view-content">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <div id="toast-container" class="fixed bottom-6 left-6 z-50 flex flex-col gap-2"></div>
+
+  <!-- Scripts -->
+  <script src="js/products.js?v=1794910245"></script>
+  <script src="js/app.js?v=1794910245"></script>
+  <script>
+    // Specific script for category page rendering
+    const targetGender = 'men';
+    
+    document.addEventListener('DOMContentLoaded', () => {
+      // Reconfigure for this page
+      renderCategoryPageProducts(targetGender);
+
+      const sortSelect = document.getElementById('sort-select');
+      if (sortSelect) {
+        sortSelect.addEventListener('change', (e) => {
+          state.sortBy = e.target.value;
+          renderCategoryPageProducts(targetGender);
+        });
+      }
+    });
+
+    function renderCategoryPageProducts(gender) {
+      const grid = document.getElementById('category-page-grid');
+      const countEl = document.getElementById('category-item-count');
+      if (!grid) return;
+
+      let items = PRODUCTS_DATA.filter(p => (p.gender === gender || p.gender === 'unisex') && p.category !== 'clogs' && p.category !== 'slides' && p.category !== 'flip flops' && !p.id.startsWith('haus-slide-') && !p.id.startsWith('haus-clog-'));
+      
+      // Sort
+      if (state.sortBy === 'price-low') {
+        items.sort((a, b) => a.price - b.price);
+      } else if (state.sortBy === 'price-high') {
+        items.sort((a, b) => b.price - a.price);
+      } else if (state.sortBy === 'rating') {
+        items.sort((a, b) => b.rating - a.rating);
+      }
+
+      if (countEl) {
+        countEl.textContent = `SHOWING ${items.length} ARCHITECTURAL SILHOUETTES`;
+      }
+
+      grid.innerHTML = items.map(p => createProductCardHtml(p)).join('');
+      bindCardInteractions();
+    }
+  </script>
+</body>
+</html>

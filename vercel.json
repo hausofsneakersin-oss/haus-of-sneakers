@@ -1,0 +1,11 @@
+{
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/category-men", "destination": "/category-men.html" },
+    { "source": "/category-women", "destination": "/category-women.html" },
+    { "source": "/privacy-policy", "destination": "/privacy-policy.html" },
+    { "source": "/return-and-refund", "destination": "/return-and-refund.html" },
+    { "source": "/shipping-policy", "destination": "/shipping-policy.html" },
+    { "source": "/terms-and-conditions", "destination": "/terms-and-conditions.html" }
+  ]
+}
