@@ -96,8 +96,8 @@ function resolveGoogleDriveImageUrl(url) {
 // ==========================================
 // GOOGLE SHEETS REAL-TIME SYNC ENGINE
 // ==========================================
-let GOOGLE_SHEET_ID = '1B9tTDpmxvdbYBqeJaKUSnZGziJJg35zlr1hW21cGYLY';
-let GOOGLE_SHEET_GID = '1608604003';
+let GOOGLE_SHEET_ID = '1yeqnAebhSnCkT7oHs7f8uSpNLD0O_53g1qQP1wlb5XI';
+let GOOGLE_SHEET_GID = '1887898652';
 
 function parseCSV(text) {
   const lines = [];
@@ -604,9 +604,12 @@ function renderProducts() {
     `).join('');
   }
 
-  // COMPLETE COLLECTION GRID
+  // COMPLETE COLLECTION GRID (EXCLUDES CLOGS, SLIDES, AND FLIP FLOPS)
   if (allProductsContainer) {
-    allProductsContainer.innerHTML = filtered.map(p => createProductCardHtml(p)).join('');
+    const mainGridItems = (state.activeGenderFilter === 'all')
+      ? filtered.filter(p => p.category !== 'clogs' && p.category !== 'slides' && p.category !== 'flip flops' && !p.id.startsWith('haus-clog-') && !p.id.startsWith('haus-slide-'))
+      : filtered;
+    allProductsContainer.innerHTML = mainGridItems.map(p => createProductCardHtml(p)).join('');
   }
 
   bindCardInteractions();
@@ -638,6 +641,7 @@ function createProductCardHtml(product) {
     return `
       <img 
         src="${resolveGoogleDriveImageUrl(imgUrl)}" 
+        referrerpolicy="no-referrer"
         alt="${product.name} Angle ${idx + 1}" 
         class="${cls}" 
         data-img-idx="${idx}"
@@ -964,7 +968,7 @@ function openQuickView(productId) {
             const isVid = isVideoSource(img);
             return `
             <div class="aspect-[4/5] bg-[#EAEAEA] overflow-hidden relative">
-              ${isVid ? `<iframe src="${img}" class="w-full h-full" allow="autoplay; encrypted-media" allowfullscreen frameborder="0" style="border:0;min-height:400px;"></iframe>` : `<img src="${resolveGoogleDriveImageUrl(img)}" alt="${product.name} View ${i+1}" class="w-full h-full object-cover object-center" />`}
+              ${isVid ? `<iframe src="${img}" class="w-full h-full" allow="autoplay; encrypted-media" allowfullscreen frameborder="0" style="border:0;min-height:400px;"></iframe>` : `<img src="${resolveGoogleDriveImageUrl(img)}" referrerpolicy="no-referrer" alt="${product.name} View ${i+1}" class="w-full h-full object-cover object-center" />`}
             </div>
             `;
           }).join('')}
