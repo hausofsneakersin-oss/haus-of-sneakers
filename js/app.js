@@ -78,7 +78,7 @@ function resolveGoogleDriveMedia(url) {
     }
     // High-speed image CDN for images
     return {
-      url: 'https://lh3.googleusercontent.com/d/' + fileId,
+      url: 'https://lh3.googleusercontent.com/d/' + fileId + '=w1200',
       isVideo: false
     };
   }
@@ -157,7 +157,7 @@ function parseProductsFromCsv(csvText) {
     const section = (getCol(row, 'section') || 'all').toLowerCase();
     
     // Parse sizes
-    const rawSizes = getCol(row, 'sizes');
+    const rawSizes = getCol(row, 'sizes', 'sizes [row 1]', 'size');
     const sizes = rawSizes ? rawSizes.split(',').map(s => s.trim()).filter(Boolean) : ["UK 7", "UK 8", "UK 9", "UK 10"];
     
     // Parse colors
@@ -660,7 +660,7 @@ function createProductCardHtml(product) {
       <div class="shoe-card-media relative w-full aspect-[4/3.5] overflow-hidden cursor-pointer" onclick="openQuickView('${product.id}')">
         
         <!-- Image Stack Track -->
-        <div class="card-slides-track" id="card-track-${product.id}">>
+        <div class="card-slides-track" id="card-track-${product.id}">
           ${slidesHtml}
         </div>
 
