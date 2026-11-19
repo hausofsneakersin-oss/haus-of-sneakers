@@ -43,7 +43,11 @@ function formatPrice(amountInInr) {
 function isVideoSource(url) {
   if (!url) return false;
   const u = String(url).toLowerCase();
-  return u.endsWith('.mp4') || u.endsWith('.webm') || u.endsWith('.mov') || u.includes('/preview') || u.includes('export=download') || u.includes('type=video') || u.includes('drive.usercontent.google.com/download');
+  // Direct video extensions
+  if (u.endsWith('.mp4') || u.endsWith('.webm') || u.endsWith('.mov')) return true;
+  // Known video delivery patterns
+  if (u.includes('export=download') || u.includes('type=video') || u.includes('drive.usercontent.google.com/download')) return true;
+  return false;
 }
 
 function resolveGoogleDriveMedia(url) {
@@ -169,7 +173,7 @@ function parseProductsFromCsv(csvText) {
 
     // Parse images (resolving Google Drive links)
     const rawImages = getCol(row, 'images', 'image', 'product images', 'product image');
-    let images = rawImages ? rawImages.split(/[\n,]+/).map(s => resolveGoogleDriveMedia(s).url).filter(Boolean) : [];
+    let images = rawImages ? rawImages.split(/[\n,]+/).map(s => s.trim()).filter(Boolean).map(s => resolveGoogleDriveMedia(s).url).filter(u => u && u.length > 5) : [];
     if (images.length === 0) {
       images = ['assets/products/core-fatlace-white.jpg'];
     }
