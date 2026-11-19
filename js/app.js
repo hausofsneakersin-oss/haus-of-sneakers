@@ -50,10 +50,31 @@ function isVideoSource(url) {
   return false;
 }
 
+// Cache detected video IDs in memory & localStorage so they render as videos immediately on load
+const DETECTED_VIDEOS_KEY = 'haus_detected_video_ids';
+function getDetectedVideoIds() {
+  try {
+    const raw = localStorage.getItem(DETECTED_VIDEOS_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch (e) {
+    return [];
+  }
+}
+function markFileAsVideo(fileId) {
+  if (!fileId) return;
+  try {
+    const list = getDetectedVideoIds();
+    if (!list.includes(fileId)) {
+      list.push(fileId);
+      localStorage.setItem(DETECTED_VIDEOS_KEY, JSON.stringify(list));
+    }
+  } catch (e) {}
+}
+
 function resolveGoogleDriveMedia(url) {
-  if (!url) return { url: '', isVideo: false };
+  if (!url) return { url: '', previewUrl: '', isVideo: false };
   url = String(url).trim();
-  if (!url) return { url: '', isVideo: false };
+  if (!url) return { url: '', previewUrl: '', isVideo: false };
 
   let fileId = '';
   const fileMatch = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
@@ -76,7 +97,8 @@ function resolveGoogleDriveMedia(url) {
     '1R_lQ237WqhM3A-fF8MEIzUtX7F2UKglJ': 'assets/videos/onitsuka-mexico-66.mp4'
   };
 
-  const isExplicitVideo = isVideoSource(url) || (fileId && (knownVideoIds.includes(fileId) || url.includes('video')));
+  const detectedList = getDetectedVideoIds();
+  const isExplicitVideo = isVideoSource(url) || (fileId && (knownVideoIds.includes(fileId) || detectedList.includes(fileId) || url.includes('video')));
 
   if (fileId) {
     if (localVideoOverrides[fileId]) {
@@ -87,9 +109,10 @@ function resolveGoogleDriveMedia(url) {
       };
     }
     if (isExplicitVideo) {
+      // Direct streamable URL via Vercel serverless proxy to eliminate CORS/CORP issues completely
+      const proxyUrl = '/api/video?id=' + fileId;
       return {
-        // Direct streamable URL for native <video> autoplay & embed fallback
-        url: 'https://drive.usercontent.google.com/download?id=' + fileId + '&export=download',
+        url: proxyUrl,
         previewUrl: 'https://drive.google.com/file/d/' + fileId + '/preview',
         isVideo: true
       };
@@ -126,43 +149,61 @@ function probeAndReplaceVideos() {
     if (!fileId || img.dataset.videoProbed) return;
     img.dataset.videoProbed = '1';
 
-    const videoUrl = 'https://drive.usercontent.google.com/download?id=' + fileId + '&export=download';
-    const testVideo = document.createElement('video');
-    testVideo.preload = 'metadata';
-    testVideo.muted = true;
-    testVideo.style.display = 'none';
-    testVideo.src = videoUrl;
+    // Probe via API proxy with fallback to direct Google URL
+    const proxyStreamUrl = '/api/video?id=' + fileId;
+    const directStreamUrl = 'https://drive.usercontent.google.com/download?id=' + fileId + '&export=download';
+    
+    // Quick HEAD/range check using fetch
+    fetch(proxyStreamUrl, { method: 'GET', headers: { 'Range': 'bytes=0-100' } })
+      .then(res => {
+        const contentType = res.headers.get('content-type') || '';
+        if (contentType.includes('video')) {
+          markFileAsVideo(fileId);
+          convertToVideoElement(img, proxyStreamUrl, fileId);
+        }
+      })
+      .catch(() => {
+        // Fallback test via invisible video element
+        const testVideo = document.createElement('video');
+        testVideo.preload = 'metadata';
+        testVideo.muted = true;
+        testVideo.style.display = 'none';
+        testVideo.src = proxyStreamUrl;
 
-    const cleanup = () => { try { document.body.removeChild(testVideo); } catch(e){} };
+        const cleanup = () => { try { document.body.removeChild(testVideo); } catch(e){} };
 
-    testVideo.addEventListener('loadedmetadata', () => {
-      // It IS a video — replace the img with a real <video> element
-      const vid = document.createElement('video');
-      vid.src = videoUrl;
-      vid.className = img.className;
-      vid.autoplay = true;
-      vid.muted = true;
-      vid.loop = true;
-      vid.playsInline = true;
-      vid.setAttribute('playsinline', '');
-      vid.setAttribute('preload', 'auto');
-      vid.style.border = '0';
-      if (img.dataset.imgIdx) vid.setAttribute('data-img-idx', img.dataset.imgIdx);
-      img.parentNode.replaceChild(vid, img);
-      cleanup();
-      console.log('[VideoProbe] Replaced image with autoplay video for fileId:', fileId);
-    });
+        testVideo.addEventListener('loadedmetadata', () => {
+          markFileAsVideo(fileId);
+          convertToVideoElement(img, proxyStreamUrl, fileId);
+          cleanup();
+        });
 
-    testVideo.addEventListener('error', () => {
-      // Not a video — keep the image as-is
-      cleanup();
-    });
-
-    // Timeout fallback — if neither event fires within 5s, keep the image
-    setTimeout(() => { cleanup(); }, 5000);
-
-    document.body.appendChild(testVideo);
+        testVideo.addEventListener('error', () => { cleanup(); });
+        setTimeout(() => { cleanup(); }, 6000);
+        document.body.appendChild(testVideo);
+      });
   });
+}
+
+function convertToVideoElement(img, videoUrl, fileId) {
+  if (!img || !img.parentNode) return;
+  const vid = document.createElement('video');
+  vid.src = videoUrl;
+  vid.className = img.className;
+  vid.autoplay = true;
+  vid.muted = true;
+  vid.loop = true;
+  vid.playsInline = true;
+  vid.setAttribute('playsinline', '');
+  vid.setAttribute('controls', '');
+  vid.setAttribute('controlslist', 'nodownload nofullscreen noremoteplayback');
+  vid.setAttribute('disablepictureinpicture', '');
+  vid.setAttribute('preload', 'auto');
+  vid.style.border = '0';
+  vid.style.maxHeight = '80vh';
+  if (img.dataset.imgIdx) vid.setAttribute('data-img-idx', img.dataset.imgIdx);
+  img.parentNode.replaceChild(vid, img);
+  console.log('[VideoProbe] Auto-detected and replaced image with video for fileId:', fileId);
 }
 // ==========================================
 // GOOGLE SHEETS REAL-TIME SYNC ENGINE
