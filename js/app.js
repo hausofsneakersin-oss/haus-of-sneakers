@@ -97,7 +97,7 @@ function resolveGoogleDriveImageUrl(url) {
 // GOOGLE SHEETS REAL-TIME SYNC ENGINE
 // ==========================================
 let GOOGLE_SHEET_ID = '1yeqnAebhSnCkT7oHs7f8uSpNLD0O_53g1qQP1wlb5XI';
-let GOOGLE_SHEET_GID = '1887898652';
+let GOOGLE_SHEET_GID = '1369272150';
 
 function parseCSV(text) {
   const lines = [];
@@ -168,7 +168,7 @@ function parseProductsFromCsv(csvText) {
     }) : [{ name: 'Monochrome', hex: '#111111' }];
 
     // Parse images (resolving Google Drive links)
-    const rawImages = getCol(row, 'images', 'image');
+    const rawImages = getCol(row, 'images', 'image', 'product images', 'product image');
     let images = rawImages ? rawImages.split(/[\n,]+/).map(s => resolveGoogleDriveMedia(s).url).filter(Boolean) : [];
     if (images.length === 0) {
       images = ['assets/products/core-fatlace-white.jpg'];
