@@ -71,9 +71,21 @@ function resolveGoogleDriveMedia(url) {
     '1R_lQ237WqhM3A-fF8MEIzUtX7F2UKglJ'  // Onitsuka tiger mexico 66 golf yellow video
   ];
 
+  // Map known Drive video IDs to local static assets if available (for 100% instant autoplay reliability)
+  const localVideoOverrides = {
+    '1R_lQ237WqhM3A-fF8MEIzUtX7F2UKglJ': 'assets/videos/onitsuka-mexico-66.mp4'
+  };
+
   const isExplicitVideo = isVideoSource(url) || (fileId && (knownVideoIds.includes(fileId) || url.includes('video')));
 
   if (fileId) {
+    if (localVideoOverrides[fileId]) {
+      return {
+        url: localVideoOverrides[fileId],
+        previewUrl: localVideoOverrides[fileId],
+        isVideo: true
+      };
+    }
     if (isExplicitVideo) {
       return {
         // Direct streamable URL for native <video> autoplay & embed fallback
