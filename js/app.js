@@ -67,7 +67,8 @@ function resolveGoogleDriveMedia(url) {
   // Known uploaded video drive IDs
   const knownVideoIds = [
     '1GNnLu0JEBlOcPSgIVy_chChWHBAz9Iqx', // Core Men Bold Lug Platform
-    '1iNGmuuWBM-LXfAYLLgOst9M06FgarhsJ'  // Core Women Sleek Retro Runner
+    '1iNGmuuWBM-LXfAYLLgOst9M06FgarhsJ', // Core Women Sleek Retro Runner
+    '1R_lQ237WqhM3A-fF8MEIzUtX7F2UKglJ'  // Onitsuka tiger mexico 66 golf yellow video
   ];
 
   const isExplicitVideo = isVideoSource(url) || (fileId && (knownVideoIds.includes(fileId) || url.includes('video')));
@@ -96,6 +97,58 @@ function resolveGoogleDriveMedia(url) {
 function resolveGoogleDriveImageUrl(url) {
   const media = resolveGoogleDriveMedia(url);
   return media.url;
+}
+
+// ==========================================
+// SMART VIDEO PROBE — Detects Drive videos disguised as images
+// After products render, tests each lh3 image to see if the
+// original Drive file is actually a video. If yes, replaces
+// the <img> with a native <video autoplay muted loop playsinline>.
+// ==========================================
+function probeAndReplaceVideos() {
+  const imgs = document.querySelectorAll('img[data-drive-file-id]');
+  imgs.forEach(img => {
+    const fileId = img.dataset.driveFileId;
+    if (!fileId || img.dataset.videoProbed) return;
+    img.dataset.videoProbed = '1';
+
+    const videoUrl = 'https://drive.usercontent.google.com/download?id=' + fileId + '&export=download';
+    const testVideo = document.createElement('video');
+    testVideo.preload = 'metadata';
+    testVideo.muted = true;
+    testVideo.style.display = 'none';
+    testVideo.src = videoUrl;
+
+    const cleanup = () => { try { document.body.removeChild(testVideo); } catch(e){} };
+
+    testVideo.addEventListener('loadedmetadata', () => {
+      // It IS a video — replace the img with a real <video> element
+      const vid = document.createElement('video');
+      vid.src = videoUrl;
+      vid.className = img.className;
+      vid.autoplay = true;
+      vid.muted = true;
+      vid.loop = true;
+      vid.playsInline = true;
+      vid.setAttribute('playsinline', '');
+      vid.setAttribute('preload', 'auto');
+      vid.style.border = '0';
+      if (img.dataset.imgIdx) vid.setAttribute('data-img-idx', img.dataset.imgIdx);
+      img.parentNode.replaceChild(vid, img);
+      cleanup();
+      console.log('[VideoProbe] Replaced image with autoplay video for fileId:', fileId);
+    });
+
+    testVideo.addEventListener('error', () => {
+      // Not a video — keep the image as-is
+      cleanup();
+    });
+
+    // Timeout fallback — if neither event fires within 5s, keep the image
+    setTimeout(() => { cleanup(); }, 5000);
+
+    document.body.appendChild(testVideo);
+  });
 }
 // ==========================================
 // GOOGLE SHEETS REAL-TIME SYNC ENGINE
@@ -617,6 +670,7 @@ function renderProducts() {
   }
 
   bindCardInteractions();
+  probeAndReplaceVideos();
 }
 
 // Generates Product Card HTML (MATCHING KARB SCREENSHOTS 2 & 3: 3-column edge-to-edge, thin white borders, SELECT OPTION dropdown, ADD TO CART)
@@ -626,8 +680,10 @@ function createProductCardHtml(product) {
 
   // In-Card image stack — absolute positioning, opacity-based switching
   const numImages = product.images.length;
-  const slidesHtml = product.images.map((imgUrl, idx) => {
-    const isVid = isVideoSource(imgUrl);
+  const slidesHtml = product.images.map((rawUrl, idx) => {
+    const media = resolveGoogleDriveMedia(rawUrl);
+    const imgUrl = media.url;
+    const isVid = media.isVideo;
     const cls = `card-slide-image${idx === currentImgIdx ? ' active-slide' : ''}${idx === 1 ? ' hover-slide' : ''}`;
     if (isVid) {
       return `
@@ -641,13 +697,16 @@ function createProductCardHtml(product) {
         ></video>
       `;
     }
+    const driveMatch = imgUrl.match(/\/d\/([a-zA-Z0-9_-]+)/);
+    const driveFileIdAttr = driveMatch ? `data-drive-file-id="${driveMatch[1]}"` : '';
     return `
       <img 
-        src="${resolveGoogleDriveImageUrl(imgUrl)}" 
+        src="${imgUrl}" 
         referrerpolicy="no-referrer"
         alt="${product.name} Angle ${idx + 1}" 
         class="${cls}" 
         data-img-idx="${idx}"
+        ${driveFileIdAttr}
         ${idx === 0 ? '' : 'loading="lazy"'}
         onerror="if(!this.dataset.videoFallbackTried && this.src.includes('lh3.googleusercontent.com/d/')){ this.dataset.videoFallbackTried='1'; var fileId=this.src.match(/\/d\/([a-zA-Z0-9_-]+)/); if(fileId){ var vid=document.createElement('video'); vid.src='https://drive.usercontent.google.com/download?id='+fileId[1]+'&export=download'; vid.className=this.className; vid.autoplay=true; vid.muted=true; vid.loop=true; vid.playsInline=true; vid.setAttribute('playsinline',''); vid.style.border='0'; this.parentNode.replaceChild(vid,this); return; } } this.onerror=null; this.src='${getSvgShoeFallback(product.name, product.colors[0]?.hex || '#0a0a0a')}'"
       />
@@ -967,11 +1026,15 @@ function openQuickView(productId) {
       <!-- LEFT SIDE (APPROX 67% WIDTH / 8 COLS): LARGE EDGE-TO-EDGE IMAGE GALLERY -->
       <div class="lg:col-span-8 p-0 bg-black border-b lg:border-b-0 lg:border-r border-white/10">
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-px bg-white/10">
-          ${product.images.map((img, i) => {
-            const isVid = isVideoSource(img);
+          ${product.images.map((rawImg, i) => {
+            const media = resolveGoogleDriveMedia(rawImg);
+            const img = media.url;
+            const isVid = media.isVideo;
+            const driveMatch = img.match(/\/d\/([a-zA-Z0-9_-]+)/);
+            const driveFileIdAttr = driveMatch ? `data-drive-file-id="${driveMatch[1]}"` : '';
             return `
             <div class="aspect-[4/5] bg-[#EAEAEA] overflow-hidden relative">
-              ${isVid ? `<video src="${img}" class="w-full h-full object-cover" autoplay muted loop playsinline preload="auto" style="border:0;min-height:400px;"></video>` : `<img src="${resolveGoogleDriveImageUrl(img)}" referrerpolicy="no-referrer" alt="${product.name} View ${i+1}" class="w-full h-full object-cover object-center" />`}
+              ${isVid ? `<video src="${img}" class="w-full h-full object-cover" autoplay muted loop playsinline preload="auto" style="border:0;min-height:400px;"></video>` : `<img src="${img}" referrerpolicy="no-referrer" alt="${product.name} View ${i+1}" ${driveFileIdAttr} class="w-full h-full object-cover object-center" />`}
             </div>
             `;
           }).join('')}
@@ -1076,6 +1139,7 @@ function openQuickView(productId) {
   window.selectedQuickViewSize = selectedSize;
   window.selectedQuickViewColor = selectedColor;
   modal.classList.remove('hidden');
+  probeAndReplaceVideos();
 }
 
 function selectSize(sizeStr, el) {
