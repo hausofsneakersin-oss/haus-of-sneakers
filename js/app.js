@@ -77,15 +77,15 @@ function resolveGoogleDriveMedia(url) {
     if (isExplicitVideo) {
       return {
         // Direct streamable URL for native <video> autoplay & embed fallback
-        url: 'https://drive.google.com/file/d/' + fileId + '/preview',
-        streamUrl: 'https://drive.usercontent.google.com/download?id=' + fileId + '&export=download',
+        url: 'https://drive.usercontent.google.com/download?id=' + fileId + '&export=download',
+        previewUrl: 'https://drive.google.com/file/d/' + fileId + '/preview',
         isVideo: true
       };
     }
     // High-speed image CDN for images
     return {
       url: 'https://lh3.googleusercontent.com/d/' + fileId + '=w1200',
-      streamUrl: '',
+      previewUrl: '',
       isVideo: false
     };
   }
@@ -685,26 +685,18 @@ function createProductCardHtml(product) {
   const slidesHtml = product.images.map((rawUrl, idx) => {
     const media = resolveGoogleDriveMedia(rawUrl);
     const imgUrl = media.url;
-    const streamUrl = media.streamUrl || imgUrl;
     const isVid = media.isVideo;
     const cls = `card-slide-image${idx === currentImgIdx ? ' active-slide' : ''}${idx === 1 ? ' hover-slide' : ''}`;
     if (isVid) {
       return `
         <video 
-          src="${streamUrl}" 
+          src="${imgUrl}" 
           class="${cls} object-cover w-full h-full pointer-events-none"
           data-img-idx="${idx}"
           autoplay muted loop playsinline
           preload="auto"
           style="border:0;"
-          onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='block';"
         ></video>
-        <iframe 
-          src="${imgUrl}" 
-          class="${cls} object-cover w-full h-full pointer-events-none" 
-          style="display:none; border:0;"
-          allow="autoplay"
-        ></iframe>
       `;
     }
     const driveMatch = imgUrl.match(/\/d\/([a-zA-Z0-9_-]+)/);
@@ -1039,15 +1031,25 @@ function openQuickView(productId) {
           ${product.images.map((rawImg, i) => {
             const media = resolveGoogleDriveMedia(rawImg);
             const img = media.url;
-            const streamUrl = media.streamUrl || img;
             const isVid = media.isVideo;
             const driveMatch = img.match(/\/d\/([a-zA-Z0-9_-]+)/);
             const driveFileIdAttr = driveMatch ? `data-drive-file-id="${driveMatch[1]}"` : '';
             return `
-            <div class="aspect-[4/5] bg-black overflow-hidden relative">
+            <div class="aspect-[4/5] bg-black overflow-hidden relative flex items-center justify-center">
               ${isVid ? `
-                <video src="${streamUrl}" class="w-full h-full object-cover" autoplay muted loop playsinline preload="auto" style="border:0;min-height:400px;" onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='block';"></video>
-                <iframe src="${img}" class="w-full h-full" style="display:none; border:0; min-height:400px;" allow="autoplay"></iframe>
+                <video 
+                  src="${img}" 
+                  class="w-full h-full object-cover" 
+                  autoplay 
+                  muted 
+                  loop 
+                  playsinline 
+                  controls 
+                  controlslist="nodownload nofullscreen noremoteplayback" 
+                  disablepictureinpicture 
+                  preload="auto" 
+                  style="border:0; max-height: 80vh;"
+                ></video>
               ` : `<img src="${img}" referrerpolicy="no-referrer" alt="${product.name} View ${i+1}" ${driveFileIdAttr} class="w-full h-full object-cover object-center" />`}
             </div>
             `;
