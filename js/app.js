@@ -89,7 +89,11 @@ function resolveGoogleDriveMedia(url) {
   const knownVideoIds = [
     '1GNnLu0JEBlOcPSgIVy_chChWHBAz9Iqx', // Core Men Bold Lug Platform
     '1iNGmuuWBM-LXfAYLLgOst9M06FgarhsJ', // Core Women Sleek Retro Runner
-    '1R_lQ237WqhM3A-fF8MEIzUtX7F2UKglJ'  // Onitsuka tiger mexico 66 golf yellow video
+    '1R_lQ237WqhM3A-fF8MEIzUtX7F2UKglJ', // Onitsuka tiger mexico 66 golf yellow video
+    '169IQUruZsWR50os6OGsWrhSF57DyRdXp',
+    '1l9Ro7s1CgBsELWlnRJPwePIh94P2YZTY',
+    '1g7iPwpQcrgMBoQF-A2RVl08Hm9FIlibs',
+    '1Z4onDQ9LqGnSqJSHZ0grdkVvIGoio2fH'
   ];
 
   // Map known Drive video IDs to local static assets if available (for 100% instant autoplay reliability)
@@ -187,24 +191,43 @@ function probeAndReplaceVideos() {
 
 function convertToVideoElement(img, videoUrl, fileId) {
   if (!img || !img.parentNode) return;
+  const parent = img.parentNode;
+  const isInQuickView = img.closest('#quick-view-content');
+
   const vid = document.createElement('video');
   vid.src = videoUrl;
-  vid.className = img.className;
+  vid.className = img.className + (isInQuickView ? ' cursor-pointer qv-video' : '');
   vid.autoplay = true;
   vid.muted = true;
   vid.loop = true;
   vid.playsInline = true;
   vid.setAttribute('playsinline', '');
-  vid.setAttribute('controls', '');
-  vid.setAttribute('controlslist', 'nodownload nofullscreen noremoteplayback');
-  vid.setAttribute('disablepictureinpicture', '');
   vid.setAttribute('preload', 'auto');
   vid.style.border = '0';
-  vid.style.maxHeight = '80vh';
   if (img.dataset.imgIdx) vid.setAttribute('data-img-idx', img.dataset.imgIdx);
-  img.parentNode.replaceChild(vid, img);
+
+  if (isInQuickView) {
+    vid.onclick = () => { vid.paused ? vid.play() : vid.pause(); };
+    parent.replaceChild(vid, img);
+    if (!parent.querySelector('.qv-sound-toggle')) {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'qv-sound-toggle absolute bottom-3 right-3 px-2.5 py-1 bg-black/75 backdrop-blur-md text-white text-xs border border-white/20 rounded-full hover:bg-black transition-all flex items-center gap-1 z-20 shadow-md';
+      btn.innerHTML = '<span class="text-xs">🔇</span>';
+      btn.title = 'Toggle Sound';
+      btn.onclick = (e) => {
+        e.stopPropagation();
+        vid.muted = !vid.muted;
+        btn.querySelector('span').textContent = vid.muted ? '🔇' : '🔊';
+      };
+      parent.appendChild(btn);
+    }
+  } else {
+    parent.replaceChild(vid, img);
+  }
   console.log('[VideoProbe] Auto-detected and replaced image with video for fileId:', fileId);
 }
+
 // ==========================================
 // GOOGLE SHEETS REAL-TIME SYNC ENGINE
 // ==========================================
@@ -1088,21 +1111,22 @@ function openQuickView(productId) {
             const driveMatch = img.match(/\/d\/([a-zA-Z0-9_-]+)/);
             const driveFileIdAttr = driveMatch ? `data-drive-file-id="${driveMatch[1]}"` : '';
             return `
-            <div class="aspect-[4/5] bg-black overflow-hidden relative flex items-center justify-center">
+            <div class="aspect-[4/5] bg-black overflow-hidden relative flex items-center justify-center qv-media-cell">
               ${isVid ? `
                 <video 
                   src="${img}" 
-                  class="w-full h-full object-cover" 
+                  class="w-full h-full object-cover qv-video cursor-pointer" 
                   autoplay 
                   muted 
                   loop 
                   playsinline 
-                  controls 
-                  controlslist="nodownload nofullscreen noremoteplayback" 
-                  disablepictureinpicture 
                   preload="auto" 
-                  style="border:0; max-height: 80vh;"
+                  onclick="this.paused ? this.play() : this.pause()"
+                  style="border:0;"
                 ></video>
+                <button type="button" onclick="event.stopPropagation(); const v=this.closest('.qv-media-cell').querySelector('video'); if(v){ v.muted=!v.muted; this.querySelector('span').textContent=v.muted?'🔇':'🔊'; }" class="qv-sound-toggle absolute bottom-3 right-3 px-2.5 py-1 bg-black/75 backdrop-blur-md text-white text-xs border border-white/20 rounded-full hover:bg-black transition-all flex items-center gap-1 z-20 shadow-md" title="Toggle Sound">
+                  <span class="text-xs">🔇</span>
+                </button>
               ` : `<img src="${img}" referrerpolicy="no-referrer" alt="${product.name} View ${i+1}" ${driveFileIdAttr} class="w-full h-full object-cover object-center" />`}
             </div>
             `;
@@ -1455,24 +1479,28 @@ function checkoutViaWhatsApp() {
   let shipping = subtotal >= 2499 ? 0 : 250;
   let total = subtotal - discount + shipping;
 
-  let msg = `*NEW ORDER Â HAUS OF SNEAKER*\n`;
-  msg += `------------------------------------\n`;
+  let msg = "*HAUS OF SNEAKERS | CART ORDER*\n";
+  msg += "─────────────────────────\n\n";
+  msg += "Hello Team, I would like to place an order for the following item(s):\n\n";
   state.cart.forEach((item, idx) => {
-    msg += `${idx + 1}. *${item.name}*\n`;
-    msg += `   - Size: ${item.size || 'Standard'}\n`;
-    if (item.color) msg += `   - Color: ${item.color}\n`;
-    msg += `   - Qty: ${item.quantity}\n`;
-    msg += `   - Price: Rs. ${(item.price * item.quantity).toLocaleString('en-IN')}\n\n`;
+    msg += (idx + 1) + ". *" + item.name + "*\n";
+    msg += "   • Size: " + (item.size || 'Standard') + "\n";
+    if (item.color && item.color.toLowerCase() !== 'monochrome') {
+      msg += "   • Color: " + item.color + "\n";
+    }
+    msg += "   • Quantity: " + item.quantity + "\n";
+    msg += "   • Price: Rs. " + (item.price * item.quantity).toLocaleString('en-IN') + "\n\n";
   });
-  msg += `------------------------------------\n`;
-  msg += `Subtotal: Rs. ${subtotal.toLocaleString('en-IN')}\n`;
-  if (discount > 0) msg += `Discount (HAUS10): -Rs. ${discount.toLocaleString('en-IN')}\n`;
-  msg += `Shipping: ${shipping === 0 ? 'FREE Express' : 'Rs. ' + shipping}\n`;
-  msg += `*Total Amount: Rs. ${total.toLocaleString('en-IN')}*\n`;
-  msg += `------------------------------------\n`;
-  msg += `Please confirm my order and share delivery details!`;
+  msg += "─────────────────────────\n";
+  msg += "🧾 *ORDER SUMMARY*\n";
+  msg += "• Subtotal: Rs. " + subtotal.toLocaleString('en-IN') + "\n";
+  if (discount > 0) msg += "• Discount (HAUS10): -Rs. " + discount.toLocaleString('en-IN') + "\n";
+  msg += "• Shipping: " + (shipping === 0 ? 'FREE Express' : 'Rs. ' + shipping) + "\n";
+  msg += "• *Total Amount: Rs. " + total.toLocaleString('en-IN') + "*\n";
+  msg += "─────────────────────────\n\n";
+  msg += "Please confirm my order and share delivery / payment details. Thank you!";
 
-  const waUrl = `https://wa.me/${CORE_WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+  const waUrl = "https://wa.me/" + CORE_WHATSAPP_NUMBER + "?text=" + encodeURIComponent(msg);
   window.open(waUrl, '_blank');
 }
 
@@ -1480,19 +1508,27 @@ function buyNowWhatsApp(productId, size, color) {
   const product = PRODUCTS_DATA.find(p => p.id === productId);
   if (!product) return;
   const selSize = size || product.sizes[0] || 'Standard';
-  const selColor = color || product.colors[0]?.name || '';
+  const selColor = color || (product.colors && product.colors[0]?.name) || '';
 
-  let msg = `*ORDER INQUIRY Â HAUS OF SNEAKER*\n`;
-  msg += `------------------------------------\n`;
-  msg += `I would like to purchase:\n`;
-  msg += `👟 *${product.name}*\n`;
-  msg += `- Size: ${selSize}\n`;
-  if (selColor) msg += `- Color: ${selColor}\n`;
-  msg += `- Price: Rs. ${product.price.toLocaleString('en-IN')}\n`;
-  msg += `------------------------------------\n`;
-  msg += `Please confirm availability and dispatch!`;
+  const siteOrigin = (typeof window !== 'undefined' && window.location && window.location.origin) ? window.location.origin : 'https://www.hausofsneakers.in';
 
-  const waUrl = `https://wa.me/${CORE_WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+  let msg = "*HAUS OF SNEAKERS | PRODUCT ENQUIRY*\n";
+  msg += "─────────────────────────\n\n";
+  msg += "Hello Team, I am interested in purchasing this pair:\n\n";
+  msg += "👟 *Product:* " + product.name + "\n";
+  msg += "📏 *Size:* " + selSize + "\n";
+  if (selColor && selColor.toLowerCase() !== 'monochrome') {
+    msg += "🎨 *Color:* " + selColor + "\n";
+  }
+  msg += "💰 *Price:* Rs. " + product.price.toLocaleString('en-IN') + "\n";
+  if (product.quality) {
+    msg += "✨ *Quality:* " + product.quality + "\n";
+  }
+  msg += "\n🔗 *Link:* " + siteOrigin + "\n";
+  msg += "─────────────────────────\n\n";
+  msg += "Please confirm size availability, dispatch timeline, and payment options. Thank you!";
+
+  const waUrl = "https://wa.me/" + CORE_WHATSAPP_NUMBER + "?text=" + encodeURIComponent(msg);
   window.open(waUrl, '_blank');
 }
 
