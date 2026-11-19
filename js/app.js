@@ -71,8 +71,8 @@ function resolveGoogleDriveMedia(url) {
   if (fileId) {
     if (isExplicitVideo) {
       return {
-        // Use Google Drive preview embed for reliable playback
-        url: 'https://drive.google.com/file/d/' + fileId + '/preview',
+        // Direct streamable URL for native <video> autoplay
+        url: 'https://drive.usercontent.google.com/download?id=' + fileId + '&export=download',
         isVideo: true
       };
     }
@@ -627,15 +627,14 @@ function createProductCardHtml(product) {
     const cls = `card-slide-image${idx === currentImgIdx ? ' active-slide' : ''}${idx === 1 ? ' hover-slide' : ''}`;
     if (isVid) {
       return `
-        <iframe 
+        <video 
           src="${imgUrl}" 
-          class="${cls} object-cover w-full h-full pointer-events-none" 
-          allow="autoplay; encrypted-media" 
-          allowfullscreen
-          frameborder="0"
+          class="${cls} object-cover w-full h-full pointer-events-none"
           data-img-idx="${idx}"
+          autoplay muted loop playsinline
+          preload="auto"
           style="border:0;"
-        ></iframe>
+        ></video>
       `;
     }
     return `
@@ -646,7 +645,7 @@ function createProductCardHtml(product) {
         class="${cls}" 
         data-img-idx="${idx}"
         ${idx === 0 ? '' : 'loading="lazy"'}
-        onerror="this.onerror=null; this.src='${getSvgShoeFallback(product.name, product.colors[0]?.hex || '#0a0a0a')}'"
+        onerror="if(!this.dataset.videoFallbackTried && this.src.includes('lh3.googleusercontent.com/d/')){ this.dataset.videoFallbackTried='1'; var fileId=this.src.match(/\/d\/([a-zA-Z0-9_-]+)/); if(fileId){ var vid=document.createElement('video'); vid.src='https://drive.usercontent.google.com/download?id='+fileId[1]+'&export=download'; vid.className=this.className; vid.autoplay=true; vid.muted=true; vid.loop=true; vid.playsInline=true; vid.setAttribute('playsinline',''); vid.style.border='0'; this.parentNode.replaceChild(vid,this); return; } } this.onerror=null; this.src='${getSvgShoeFallback(product.name, product.colors[0]?.hex || '#0a0a0a')}'"
       />
     `;
   }).join('');
@@ -968,7 +967,7 @@ function openQuickView(productId) {
             const isVid = isVideoSource(img);
             return `
             <div class="aspect-[4/5] bg-[#EAEAEA] overflow-hidden relative">
-              ${isVid ? `<iframe src="${img}" class="w-full h-full" allow="autoplay; encrypted-media" allowfullscreen frameborder="0" style="border:0;min-height:400px;"></iframe>` : `<img src="${resolveGoogleDriveImageUrl(img)}" referrerpolicy="no-referrer" alt="${product.name} View ${i+1}" class="w-full h-full object-cover object-center" />`}
+              ${isVid ? `<video src="${img}" class="w-full h-full object-cover" autoplay muted loop playsinline preload="auto" style="border:0;min-height:400px;"></video>` : `<img src="${resolveGoogleDriveImageUrl(img)}" referrerpolicy="no-referrer" alt="${product.name} View ${i+1}" class="w-full h-full object-cover object-center" />`}
             </div>
             `;
           }).join('')}
