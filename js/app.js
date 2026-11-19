@@ -43,16 +43,6 @@ function formatPrice(amountInInr) {
 function isVideoSource(url) {
   if (!url) return false;
   const u = String(url).toLowerCase();
-  // Direct video extensions
-  if (u.endsWith('.mp4') || u.endsWith('.webm') || u.endsWith('.mov')) return true;
-  // Known Google Drive video patterns
-  if (u.includes('/preview') || u.includes('export=download') || u.includes('type=video') || u.includes('drive.usercontent.google.com/download')) return true;
-  // Heuristic: Google Drive URLs that are NOT common image extensions are likely videos
-  if (u.includes('drive.google.com') && !(u.endsWith('.jpg') || u.endsWith('.jpeg') || u.endsWith('.png') || u.endsWith('.gif') || u.includes('lh3.googleusercontent.com'))) return true;
-  return false;
-}
-  if (!url) return false;
-  const u = String(url).toLowerCase();
   return u.endsWith('.mp4') || u.endsWith('.webm') || u.endsWith('.mov') || u.includes('/preview') || u.includes('export=download') || u.includes('type=video') || u.includes('drive.usercontent.google.com/download');
 }
 
