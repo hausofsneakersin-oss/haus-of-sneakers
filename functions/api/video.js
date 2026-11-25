@@ -18,13 +18,17 @@ export async function onRequestGet(context) {
   try {
     const driveRes = await fetch(driveUrl, {
       headers,
-      redirect: 'follow'
+      redirect: 'follow',
+      cf: {
+        cacheEverything: true,
+        cacheTtl: 604800 // Cache for 7 days on Cloudflare edge
+      }
     });
 
     const responseHeaders = new Headers(driveRes.headers);
     responseHeaders.set('Access-Control-Allow-Origin', '*');
     responseHeaders.set('Accept-Ranges', 'bytes');
-    responseHeaders.set('Cache-Control', 'public, max-age=86400, s-maxage=604800, stale-while-revalidate=86400');
+    responseHeaders.set('Cache-Control', 'public, max-age=604800, s-maxage=604800, stale-while-revalidate=86400');
     responseHeaders.delete('Cross-Origin-Resource-Policy');
 
     return new Response(driveRes.body, {

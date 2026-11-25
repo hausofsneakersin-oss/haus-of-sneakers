@@ -71,7 +71,7 @@ function markFileAsVideo(fileId) {
   } catch (e) {}
 }
 
-function resolveGoogleDriveMedia(url) {
+function resolveGoogleDriveMedia(url, size = 'card') {
   if (!url) return { url: '', previewUrl: '', isVideo: false };
   url = String(url).trim();
   if (!url) return { url: '', previewUrl: '', isVideo: false };
@@ -113,7 +113,7 @@ function resolveGoogleDriveMedia(url) {
       };
     }
     if (isExplicitVideo) {
-      // Direct streamable URL via Vercel serverless proxy to eliminate CORS/CORP issues completely
+      // Direct streamable URL via serverless/edge proxy to eliminate CORS/CORP issues completely
       const proxyUrl = '/api/video?id=' + fileId;
       return {
         url: proxyUrl,
@@ -121,9 +121,12 @@ function resolveGoogleDriveMedia(url) {
         isVideo: true
       };
     }
-    // High-speed image CDN for images
+    // High-speed image CDN for images:
+    // 'card' uses =w700 (crisp retina, 80% lighter payload, eliminates lag)
+    // 'large' uses =w1200 (ultra high res for full modal)
+    const imgSize = (size === 'large' || size === 'full') ? '=w1200' : '=w700';
     return {
-      url: 'https://lh3.googleusercontent.com/d/' + fileId + '=w1200',
+      url: 'https://lh3.googleusercontent.com/d/' + fileId + imgSize,
       previewUrl: '',
       isVideo: false
     };
@@ -146,47 +149,88 @@ function resolveGoogleDriveImageUrl(url) {
 // original Drive file is actually a video. If yes, replaces
 // the <img> with a native <video autoplay muted loop playsinline>.
 // ==========================================
+// Session cache for images confirmed as NOT videos, avoiding duplicate probing
+const KNOWN_NOT_VIDEOS_KEY = 'haus_known_not_videos';
+function getKnownNotVideoIds() {
+  try {
+    const raw = sessionStorage.getItem(KNOWN_NOT_VIDEOS_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch (e) { return []; }
+}
+function markFileAsNotVideo(fileId) {
+  if (!fileId) return;
+  try {
+    const list = getKnownNotVideoIds();
+    if (!list.includes(fileId)) {
+      list.push(fileId);
+      sessionStorage.setItem(KNOWN_NOT_VIDEOS_KEY, JSON.stringify(list));
+    }
+  } catch (e) {}
+}
+
+let probeQueue = [];
+let isProbingQueue = false;
+
+function processNextProbe() {
+  if (probeQueue.length === 0) {
+    isProbingQueue = false;
+    return;
+  }
+  isProbingQueue = true;
+  const { img, fileId, proxyStreamUrl } = probeQueue.shift();
+
+  if (!img.isConnected) {
+    setTimeout(processNextProbe, 40);
+    return;
+  }
+
+  fetch(proxyStreamUrl, { method: 'GET', headers: { 'Range': 'bytes=0-100' } })
+    .then(res => {
+      const contentType = res.headers.get('content-type') || '';
+      if (contentType.includes('video')) {
+        markFileAsVideo(fileId);
+        convertToVideoElement(img, proxyStreamUrl, fileId);
+      } else {
+        markFileAsNotVideo(fileId);
+      }
+      setTimeout(processNextProbe, 80);
+    })
+    .catch(() => {
+      setTimeout(processNextProbe, 80);
+    });
+}
+
 function probeAndReplaceVideos() {
+  const detected = getDetectedVideoIds();
+  const notVideos = getKnownNotVideoIds();
   const imgs = document.querySelectorAll('img[data-drive-file-id]');
+
   imgs.forEach(img => {
     const fileId = img.dataset.driveFileId;
     if (!fileId || img.dataset.videoProbed) return;
     img.dataset.videoProbed = '1';
 
-    // Probe via API proxy with fallback to direct Google URL
+    // If already detected as video, convert immediately
+    if (detected.includes(fileId)) {
+      convertToVideoElement(img, '/api/video?id=' + fileId, fileId);
+      return;
+    }
+    // If already confirmed as image in session, skip network probe
+    if (notVideos.includes(fileId)) return;
+
     const proxyStreamUrl = '/api/video?id=' + fileId;
-    const directStreamUrl = 'https://drive.usercontent.google.com/download?id=' + fileId + '&export=download';
-    
-    // Quick HEAD/range check using fetch
-    fetch(proxyStreamUrl, { method: 'GET', headers: { 'Range': 'bytes=0-100' } })
-      .then(res => {
-        const contentType = res.headers.get('content-type') || '';
-        if (contentType.includes('video')) {
-          markFileAsVideo(fileId);
-          convertToVideoElement(img, proxyStreamUrl, fileId);
-        }
-      })
-      .catch(() => {
-        // Fallback test via invisible video element
-        const testVideo = document.createElement('video');
-        testVideo.preload = 'metadata';
-        testVideo.muted = true;
-        testVideo.style.display = 'none';
-        testVideo.src = proxyStreamUrl;
-
-        const cleanup = () => { try { document.body.removeChild(testVideo); } catch(e){} };
-
-        testVideo.addEventListener('loadedmetadata', () => {
-          markFileAsVideo(fileId);
-          convertToVideoElement(img, proxyStreamUrl, fileId);
-          cleanup();
-        });
-
-        testVideo.addEventListener('error', () => { cleanup(); });
-        setTimeout(() => { cleanup(); }, 6000);
-        document.body.appendChild(testVideo);
-      });
+    probeQueue.push({ img, fileId, proxyStreamUrl });
   });
+
+  if (!isProbingQueue && probeQueue.length > 0) {
+    if (typeof requestIdleCallback !== 'undefined') {
+      requestIdleCallback(() => processNextProbe());
+    } else {
+      setTimeout(processNextProbe, 200);
+    }
+  }
+
+  setupVideoIntersectionObserver();
 }
 
 function convertToVideoElement(img, videoUrl, fileId) {
@@ -197,16 +241,16 @@ function convertToVideoElement(img, videoUrl, fileId) {
   const vid = document.createElement('video');
   vid.src = videoUrl;
   vid.className = img.className + (isInQuickView ? ' cursor-pointer qv-video' : '');
-  vid.autoplay = true;
   vid.muted = true;
   vid.loop = true;
   vid.playsInline = true;
   vid.setAttribute('playsinline', '');
-  vid.setAttribute('preload', 'auto');
+  vid.setAttribute('preload', 'metadata');
   vid.style.border = '0';
   if (img.dataset.imgIdx) vid.setAttribute('data-img-idx', img.dataset.imgIdx);
 
   if (isInQuickView) {
+    vid.autoplay = true;
     vid.onclick = () => { vid.paused ? vid.play() : vid.pause(); };
     parent.replaceChild(vid, img);
     if (!parent.querySelector('.qv-sound-toggle')) {
@@ -225,7 +269,33 @@ function convertToVideoElement(img, videoUrl, fileId) {
   } else {
     parent.replaceChild(vid, img);
   }
+  setupVideoIntersectionObserver();
   console.log('[VideoProbe] Auto-detected and replaced image with video for fileId:', fileId);
+}
+
+// Auto-pause off-screen videos to save mobile CPU/battery and eliminate scroll lag
+let videoObserver = null;
+function setupVideoIntersectionObserver() {
+  if (typeof IntersectionObserver === 'undefined') return;
+  if (!videoObserver) {
+    videoObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const vid = entry.target;
+        if (entry.isIntersecting) {
+          // Play only if active slide or inside quick view
+          if (!vid.classList.contains('card-slide-image') || vid.classList.contains('active-slide')) {
+            vid.play().catch(() => {});
+          }
+        } else {
+          vid.pause();
+        }
+      });
+    }, { threshold: 0.2 });
+  }
+
+  document.querySelectorAll('video').forEach(v => {
+    videoObserver.observe(v);
+  });
 }
 
 // ==========================================
@@ -759,7 +829,7 @@ function createProductCardHtml(product) {
   // In-Card image stack — absolute positioning, opacity-based switching
   const numImages = product.images.length;
   const slidesHtml = product.images.map((rawUrl, idx) => {
-    const media = resolveGoogleDriveMedia(rawUrl);
+    const media = resolveGoogleDriveMedia(rawUrl, 'card');
     const imgUrl = media.url;
     const isVid = media.isVideo;
     const cls = `card-slide-image${idx === currentImgIdx ? ' active-slide' : ''}${idx === 1 ? ' hover-slide' : ''}`;
@@ -770,7 +840,7 @@ function createProductCardHtml(product) {
           class="${cls} object-cover w-full h-full pointer-events-none"
           data-img-idx="${idx}"
           autoplay muted loop playsinline
-          preload="auto"
+          preload="metadata"
           style="border:0;"
         ></video>
       `;
@@ -785,7 +855,7 @@ function createProductCardHtml(product) {
         class="${cls}" 
         data-img-idx="${idx}"
         ${driveFileIdAttr}
-        ${idx === 0 ? '' : 'loading="lazy"'}
+        loading="lazy" decoding="async"
         onerror="if(!this.dataset.videoFallbackTried && this.src.includes('lh3.googleusercontent.com/d/')){ this.dataset.videoFallbackTried='1'; var fileId=this.src.match(/\/d\/([a-zA-Z0-9_-]+)/); if(fileId){ var vid=document.createElement('video'); vid.src='https://drive.usercontent.google.com/download?id='+fileId[1]+'&export=download'; vid.className=this.className; vid.autoplay=true; vid.muted=true; vid.loop=true; vid.playsInline=true; vid.setAttribute('playsinline',''); vid.style.border='0'; this.parentNode.replaceChild(vid,this); return; } } this.onerror=null; this.src='${getSvgShoeFallback(product.name, product.colors[0]?.hex || '#0a0a0a')}'"
       />
     `;
@@ -1105,7 +1175,7 @@ function openQuickView(productId) {
       <div class="lg:col-span-8 p-0 bg-black border-b lg:border-b-0 lg:border-r border-white/10">
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-px bg-white/10">
           ${product.images.map((rawImg, i) => {
-            const media = resolveGoogleDriveMedia(rawImg);
+            const media = resolveGoogleDriveMedia(rawImg, 'large');
             const img = media.url;
             const isVid = media.isVideo;
             const driveMatch = img.match(/\/d\/([a-zA-Z0-9_-]+)/);
