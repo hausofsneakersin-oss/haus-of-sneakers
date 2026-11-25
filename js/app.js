@@ -1618,23 +1618,15 @@ function buyNowWhatsApp(productId, size, color) {
   const selSize = size || product.sizes[0] || 'Standard';
   const selColor = color || (product.colors && product.colors[0]?.name) || '';
 
-  const siteOrigin = (typeof window !== 'undefined' && window.location && window.location.origin) ? window.location.origin : 'https://www.hausofsneakers.in';
-
-  let msg = "*HAUS OF SNEAKERS | PRODUCT ENQUIRY*\n";
-  msg += "─────────────────────────\n\n";
-  msg += "Hello Team, I am interested in purchasing this pair:\n\n";
-  msg += "👟 *Product:* " + product.name + "\n";
-  msg += "📏 *Size:* " + selSize + "\n";
+  let msg = "Hi! 👋 I'm interested in this pair of sneakers.\n\n";
+  msg += "*Product:* " + product.name + "\n";
+  msg += "*Size:* " + selSize + "\n";
   if (selColor && selColor.toLowerCase() !== 'monochrome') {
-    msg += "🎨 *Color:* " + selColor + "\n";
+    msg += "*Color:* " + selColor + "\n";
   }
-  msg += "💰 *Price:* Rs. " + product.price.toLocaleString('en-IN') + "\n";
-  if (product.quality) {
-    msg += "✨ *Quality:* " + product.quality + "\n";
-  }
-  msg += "\n🔗 *Link:* " + siteOrigin + "\n";
-  msg += "─────────────────────────\n\n";
-  msg += "Please confirm size availability, dispatch timeline, and payment options. Thank you!";
+  msg += "*Price:* ₹" + product.price.toLocaleString('en-IN') + "\n\n";
+  msg += "Is this size available? Also, please let me know the dispatch timeline and payment options.\n\n";
+  msg += "Thank you! 😊";
 
   const waUrl = "https://wa.me/" + CORE_WHATSAPP_NUMBER + "?text=" + encodeURIComponent(msg);
   window.open(waUrl, '_blank');
