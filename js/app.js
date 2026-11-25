@@ -29,6 +29,35 @@ function getSvgShoeFallback(name, color = '#0a0a0a') {
   return `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="700" viewBox="0 0 600 700" fill="%23f0f5ff"><rect width="600" height="700" fill="%23f0f5ff"/><g transform="translate(80, 220)"><path d="M40 180 C80 180, 110 170, 140 130 C170 90, 240 50, 310 60 C370 70, 420 120, 440 180 C410 200, 370 210, 320 210 C240 210, 150 205, 40 205 Z" fill="${encodeURIComponent(color)}" opacity="0.9"/><path d="M30 195 C120 195, 280 200, 450 195 C460 215, 440 240, 410 245 C320 250, 120 250, 20 235 C10 215, 20 195, 30 195 Z" fill="%23051336"/><text x="220" y="290" font-family="sans-serif" font-weight="900" font-size="22" fill="%230047ff" text-anchor="middle" letter-spacing="4">HAUS OF SNEAKER</text></g></svg>`;
 }
 
+function handleCardImageError(imgEl, productName, hexColor) {
+  if (!imgEl) return;
+  if (!imgEl.dataset.videoFallbackTried && imgEl.src && imgEl.src.includes('lh3.googleusercontent.com/d/')) {
+    imgEl.dataset.videoFallbackTried = '1';
+    const match = imgEl.src.match(/\/d\/([a-zA-Z0-9_-]+)/);
+    if (match && match[1]) {
+      const fileId = match[1];
+      fetch('/api/video?id=' + fileId, { method: 'GET', headers: { 'Range': 'bytes=0-100' } })
+        .then(res => {
+          const ct = res.headers.get('content-type') || '';
+          if (ct.includes('video')) {
+            markFileAsVideo(fileId);
+            convertToVideoElement(imgEl, '/api/video?id=' + fileId, fileId);
+          } else {
+            imgEl.onerror = null;
+            imgEl.src = getSvgShoeFallback(productName, hexColor);
+          }
+        })
+        .catch(() => {
+          imgEl.onerror = null;
+          imgEl.src = getSvgShoeFallback(productName, hexColor);
+        });
+      return;
+    }
+  }
+  imgEl.onerror = null;
+  imgEl.src = getSvgShoeFallback(productName, hexColor);
+}
+
 // --- CURRENCY FORMATTER ---
 function formatPrice(amountInInr) {
   const curr = state.currencyRates[state.currentCurrency];
@@ -115,8 +144,10 @@ function resolveGoogleDriveMedia(url, size = 'card') {
     if (isExplicitVideo) {
       // Direct streamable URL via serverless/edge proxy to eliminate CORS/CORP issues completely
       const proxyUrl = '/api/video?id=' + fileId;
+      const posterSize = (size === 'large' || size === 'full') ? '=w900' : '=w600';
       return {
         url: proxyUrl,
+        posterUrl: 'https://lh3.googleusercontent.com/d/' + fileId + posterSize,
         previewUrl: 'https://drive.google.com/file/d/' + fileId + '/preview',
         isVideo: true
       };
@@ -240,6 +271,9 @@ function convertToVideoElement(img, videoUrl, fileId) {
 
   const vid = document.createElement('video');
   vid.src = videoUrl;
+  if (fileId) {
+    vid.poster = 'https://lh3.googleusercontent.com/d/' + fileId + (isInQuickView ? '=w900' : '=w600');
+  }
   vid.className = img.className + (isInQuickView ? ' cursor-pointer qv-video' : '');
   vid.muted = true;
   vid.loop = true;
@@ -837,6 +871,7 @@ function createProductCardHtml(product) {
       return `
         <video 
           src="${imgUrl}" 
+          ${media.posterUrl ? `poster="${media.posterUrl}"` : ''}
           class="${cls} object-cover w-full h-full pointer-events-none"
           data-img-idx="${idx}"
           autoplay muted loop playsinline
@@ -856,7 +891,7 @@ function createProductCardHtml(product) {
         data-img-idx="${idx}"
         ${driveFileIdAttr}
         loading="lazy" decoding="async"
-        onerror="if(!this.dataset.videoFallbackTried && this.src.includes('lh3.googleusercontent.com/d/')){ this.dataset.videoFallbackTried='1'; var fileId=this.src.match(/\/d\/([a-zA-Z0-9_-]+)/); if(fileId){ var vid=document.createElement('video'); vid.src='https://drive.usercontent.google.com/download?id='+fileId[1]+'&export=download'; vid.className=this.className; vid.autoplay=true; vid.muted=true; vid.loop=true; vid.playsInline=true; vid.setAttribute('playsinline',''); vid.style.border='0'; this.parentNode.replaceChild(vid,this); return; } } this.onerror=null; this.src='${getSvgShoeFallback(product.name, product.colors[0]?.hex || '#0a0a0a')}'"
+        onerror="handleCardImageError(this, '${product.name.replace(/'/g, "\\'")}', '${product.colors[0]?.hex || '#0a0a0a'}')"
       />
     `;
   }).join('');
@@ -1185,15 +1220,18 @@ function openQuickView(productId) {
               ${isVid ? `
                 <video 
                   src="${img}" 
+                  ${media.posterUrl ? `poster="${media.posterUrl}"` : ''}
                   class="w-full h-full object-cover qv-video cursor-pointer" 
                   autoplay 
                   muted 
                   loop 
                   playsinline 
                   preload="auto" 
+                  oncanplay="const l=this.parentNode.querySelector('.qv-vid-loading'); if(l) l.remove();"
                   onclick="this.paused ? this.play() : this.pause()"
                   style="border:0;"
                 ></video>
+                <span class="qv-vid-loading absolute bottom-3 left-3 px-2.5 py-1 bg-black/75 backdrop-blur-md text-white text-[10px] font-mono uppercase tracking-wider border border-white/20 rounded-full z-20 pointer-events-none">Loading video...</span>
                 <button type="button" onclick="event.stopPropagation(); const v=this.closest('.qv-media-cell').querySelector('video'); if(v){ v.muted=!v.muted; this.querySelector('span').textContent=v.muted?'🔇':'🔊'; }" class="qv-sound-toggle absolute bottom-3 right-3 px-2.5 py-1 bg-black/75 backdrop-blur-md text-white text-xs border border-white/20 rounded-full hover:bg-black transition-all flex items-center gap-1 z-20 shadow-md" title="Toggle Sound">
                   <span class="text-xs">🔇</span>
                 </button>
