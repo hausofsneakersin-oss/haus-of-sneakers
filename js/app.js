@@ -439,26 +439,6 @@ function parseProductsFromCsv(csvText) {
 }
 
 async function syncFromGoogleSheet() {
-  // First try local CSV fallback if available
-  try {
-    const localRes = await fetch('/products_catalog.csv');
-    if (localRes.ok) {
-      const localCsv = await localRes.text();
-      const localProducts = parseProductsFromCsv(localCsv);
-      if (localProducts && localProducts.length > 0) {
-        const localIds = new Set(localProducts.map(p => p.id));
-      const remainingInitial = PRODUCTS_DATA.filter(p => !localIds.has(p.id));
-      PRODUCTS_DATA.splice(0, PRODUCTS_DATA.length, ...localProducts, ...remainingInitial);
-        renderProducts();
-        if (typeof renderCategoryPageProducts === 'function' && typeof targetGender !== 'undefined') {
-          renderCategoryPageProducts(targetGender);
-        }
-      }
-    }
-  } catch (e) {
-    // continue to sheet
-  }
-
   if (!GOOGLE_SHEET_ID) return;
 
   const csvUrl = 'https://docs.google.com/spreadsheets/d/' + GOOGLE_SHEET_ID + '/gviz/tq?tqx=out:csv&gid=' + (GOOGLE_SHEET_GID || '0');
@@ -471,10 +451,8 @@ async function syncFromGoogleSheet() {
     const liveProducts = parseProductsFromCsv(csvData);
     
     if (liveProducts && liveProducts.length > 0) {
-      // Update global catalog
-      const liveIds = new Set(liveProducts.map(p => p.id));
-      const remainingLocal = PRODUCTS_DATA.filter(p => !liveIds.has(p.id));
-      PRODUCTS_DATA.splice(0, PRODUCTS_DATA.length, ...liveProducts, ...remainingLocal);
+      // Replace entire catalog with Google Sheet products only (no leftover demo products)
+      PRODUCTS_DATA.splice(0, PRODUCTS_DATA.length, ...liveProducts);
       renderProducts();
       if (typeof renderCategoryPageProducts === 'function' && typeof targetGender !== 'undefined') {
         renderCategoryPageProducts(targetGender);
